@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css"
+    />
+    <link rel="icon" type="image/png" href="/img/barberia.png" />
+    <title>Reservaciones</title>
+  </head>
+  <body>
+    <div class="container-fluid p-0">
+      <nav
+        class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5 d-flex justify-content-between"
+      >
+        <a href="/" class="navbar-brand ml-lg-3">
+          <h1 class="text-primary">
+            <span class="text-white">SPA</span> Center
+          </h1>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/dashboard-home"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/dashboard-clientes"
+                >Clientes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/dashboard-reservaciones"
+                >Reservaciones</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/dashboard-usuarios"
+                >Usuarios</a
+              >
+            </li>
+          </ul>
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="/" class="nav-link active" onclick="logOut()">
+              Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!--Tabla y selects-->
+    <div class="container">
+      <div class="input-group pt-3 d-flex align-items-center">
+        <span
+          class="input-group-text"
+          id="basic-addon1"
+          style="
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            max-height: 3rem;
+          "
+          >Id para buscar</span
+        >
+        <select
+          class="form-select"
+          id="select-reservation"
+          style="
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            max-height: 3rem;
+          "
+        ></select>
+        <i
+          class="bi bi-arrow-clockwise"
+          type="button"
+          id="btn-reload-reservation"
+          style="font-size: 2.3rem"
+        ></i>
+        <!-- Button trigger modal -->
+        <i
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+          class="bi bi-plus-circle-fill m-0 p-0"
+          style="font-size: 2.3rem; color: blue"
+        ></i>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                  Agregar usuario
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  onclick="clearInputs()"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="add-client-form">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      >Id Servicio</span
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="id"
+                      aria-label="idDish"
+                      aria-describedby="basic-addon1"
+                      id="idSend"
+                    />
+                  </div>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      >Servicio</span
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="servicio"
+                      aria-label="name"
+                      aria-describedby="basic-addon1"
+                      id="nameSend"
+                    />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      >Inicio de la reservación</span
+                    >
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                      id="bookingStar"
+                      min=""
+                    />
+                  </div>
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      >Finalizacion de la reservación</span
+                    >
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      aria-describedby="basic-addon1"
+                      id="bookingEnd"
+                      min=""
+                    />
+                  </div>
+
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    id="clientnSend"
+                  >
+                    <option selected>Cliente</option>
+                  </select>
+
+                  <hr />
+
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"
+                      >Comentarios</span
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="comentarios"
+                      aria-label="comments"
+                      aria-describedby="basic-addon1"
+                      id="commentsSend"
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  onclick="clearInputs()"
+                >
+                  Cancelar
+                </button>
+                <button type="button" class="btn btn-primary" id="Agregar">
+                  Agregar reservación
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Tabla-->
+      <div class="table-responsive pt-3">
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Inicio de la reservación</th>
+              <th>Finalización de la reservación</th>
+              <th>Servicio</th>
+              <th>Cliente</th>
+              <th>Comentarios</th>
+              <th>Editar</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody id="tBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/js/script-dashboard-reservations.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

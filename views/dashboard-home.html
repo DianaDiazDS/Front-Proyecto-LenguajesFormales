@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="icon" type="image/png" href="/img/barberia.png" />
+    <title>Administración</title>
+  </head>
+  <body>
+    <div class="container-fluid p-0">
+      <nav
+        class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5 d-flex justify-content-between"
+      >
+        <a href="/" class="navbar-brand ml-lg-3">
+          <h1 class="text-primary">
+            <span class="text-white">SPA</span> Center
+          </h1>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/dashboard-home"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/dashboard-clientes"
+                >Clientes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/dashboard-translations"
+                >transacciones</a
+              >
+            </li>
+        
+          </ul>
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="/" class="nav-link active" onclick="logOut()">
+              Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div
+      class="container d-flex justify-content-center align-items-center"
+      style="min-height: 70vh"
+    >
+      <div class="align-items-center">
+        <div class="d-flex justify-content-center mt-3">
+          <h1>Bienvenido al módulo de administración</h1>
+        </div>
+        <div class="d-flex justify-content-center">
+          <div class="d-flex flex-wrap pt-4">
+            <div class="px-3">
+              <a href="/dashboard-clientes" style="text-decoration: none">
+                <div class="card" style="width: 18rem; border: 0px !important">
+                  <img src="/img/usuario.png" class="img-fluid" />
+                  <div class="card-body text-center">
+                    <h2>Clientes</h2>
+                    <p class="card-text">
+                      En este modulo se pueden visualizar los clientes
+                      registrados en la base de datos.
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="px-3">
+              <a href="/dashboard-translations" style="text-decoration: none">
+                <div class="card" style="width: 18rem; border: 0px !important">
+                  <img src="/img/calendario.png" class="img-fluid" />
+                  <div class="card-body text-center">
+                    <h2>Transacciones</h2>
+                    <p class="card-text">
+                      En este modulo se pueden visualizar las transacciones
+                      registradas en la base de datos.
+                    </p>
+                  </div>
+                </div>
+              </a>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/js/script-dashboard-home.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
