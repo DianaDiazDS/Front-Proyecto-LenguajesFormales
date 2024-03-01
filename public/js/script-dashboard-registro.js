@@ -1,5 +1,4 @@
 const apiUrl = "http://localhost:4000/client";
-// const authorizationToken = localStorage.getItem("login");
 const authorizationToken = localStorage.getItem("login");
 
 fetch(apiUrl, {
@@ -79,8 +78,6 @@ fetch(apiUrl, {
 
 
 
-
-
 const addClient = () => {
   const id = document.getElementById("id").value;
   const name = document.getElementById("name").value;
@@ -89,6 +86,7 @@ const addClient = () => {
   const username = document.getElementById("user").value;
   const password = document.getElementById("password").value;
 
+  console.log("Se añadió correctamente el nuevo usuario")
   if (!name) {
     alert("Por favor, ingresa el nombre del cliente.");
     return;
@@ -139,6 +137,7 @@ const addClient = () => {
     })
     .then((result) => {
       if (result.state) {
+        
         limpiarCampos();
         Swal.fire({
           title: "Registro exitoso",

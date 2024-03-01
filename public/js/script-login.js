@@ -1,6 +1,9 @@
 document.getElementById("btnLogin").addEventListener("click", () => {
+
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
+
+ 
 
   const URI = "http://localhost:4000/login/";
   const dataSend = {

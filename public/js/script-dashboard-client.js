@@ -24,104 +24,105 @@ fetch(apiUrl, {
   .then((data) => { })
   .catch((error) => console.error(error));
 
-// const loadTable = () => {
-//   document.getElementById("table-body").innerHTML = "";
-//   document.getElementById("select-id").innerHTML = "";
-//   const optionDefault = document.createElement("option");
-//   optionDefault.value = "Seleccione un ID";
-//   optionDefault.innerText = "Seleccione un ID";
-//   document.getElementById("select-id").appendChild(optionDefault);
-//   console.log("iduser ",iduser )
+const loadTable = () => {
+  document.getElementById("table-body").innerHTML = "";
+  document.getElementById("select-id").innerHTML = "";
+  const optionDefault = document.createElement("option");
+  optionDefault.value = "Seleccione un ID";
+  optionDefault.innerText = "Seleccione un ID";
+  document.getElementById("select-id").appendChild(optionDefault);
+  
+  
 
-//   return new Promise((resolve, reject) => {
-//     fetch(apiUrl, {
-//       headers: {
-//         Authorization: `${authorizationToken}`,
-//       },
-//     })
-//       .then((datos) => datos.json())
-//       .then((datos) => {
-//         const select = document.getElementById("select-id");
+  return new Promise((resolve, reject) => {
+    fetch(apiUrl, {
+      headers: {
+        Authorization: `${authorizationToken}`,
+      },
+    })
+      .then((datos) => datos.json())
+      .then((datos) => {
+        const select = document.getElementById("select-client");
 
-//         datos.data.forEach((cliente) => {
-//           const row = document.createElement("tr");
-//           row.innerHTML = `
-//                 <td>${cliente.id}</td>
-//                 <td>${cliente.name}</td>
-//                 <td>${cliente.celphone || "N/A"}</td>
-//                 <td>${cliente.email || "N/A"}</td>
-//                 <td>      
+        datos.data.forEach((cliente) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td>${cliente.id}</td>
+                <td>${cliente.name}</td>
+                <td>${cliente.celphone || "N/A"}</td>
+                <td>${cliente.email || "N/A"}</td>
+                <td>      
 
-//                     <i class="bi bi-pencil-fill"
-//                     type="button" 
-//                     data-bs-toggle="modal"
-//                     data-bs-target="#editModal${cliente._id}" 
-//                     style="color: #FFC300; font-size: 2rem;">
-//                     </i>
-//                     <!-- Modal -->
-//                     <div class="modal fade" id="editModal${
-//                       cliente._id
-//                     }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-//                         <div class="modal-dialog">
-//                             <div class="modal-content">
-//                                 <div class="modal-header">
-//                                     <h1 class="modal-title fs-5" id="editModalLabel">Editar Cliente</h1>
-//                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//                                 </div>
-//                                 <div class="modal-body">            
+                    <i class="bi bi-pencil-fill"
+                    type="button" 
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal${cliente._id}" 
+                    style="color: #FFC300; font-size: 2rem;">
+                    </i>
+                    <!-- Modal -->
+                    <div class="modal fade" id="editModal${
+                      cliente._id
+                    }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editModalLabel">Editar Cliente</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">            
 
-//                                     <div class="mb-3">
-//                                         <label for="update-name" class="form-label">Nombre</label>
-//                                         <input type="text" class="form-control" id="update-name${
-//                                           cliente._id
-//                                         }" value="${cliente.name}">
-//                                     </div>
-//                                     <div class="mb-3">
-//                                         <label for="update-celphone" class="form-label">Teléfono</label>
-//                                         <input type="tel" class="form-control" id="update-celphone${
-//                                           cliente._id
-//                                         }" value="${cliente.celphone}">
-//                                     </div>
-//                                     <div class="mb-3">
-//                                         <label for="update-email" class="form-label">Correo Electrónico</label>
-//                                         <input type="email" class="form-control" id="update-email${
-//                                           cliente._id
-//                                         }" value="${cliente.email}">
-//                                     </div>
-//                                 </div>
-//                                 <div class="modal-footer">                           
+                                    <div class="mb-3">
+                                        <label for="update-name" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="update-name${
+                                          cliente._id
+                                        }" value="${cliente.name}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-celphone" class="form-label">Teléfono</label>
+                                        <input type="tel" class="form-control" id="update-celphone${
+                                          cliente._id
+                                        }" value="${cliente.celphone}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-email" class="form-label">Correo Electrónico</label>
+                                        <input type="email" class="form-control" id="update-email${
+                                          cliente._id
+                                        }" value="${cliente.email}">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">                           
 
-//                                     <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-//                                 <button type="button" class="btn btn-primary" onclick="updateClient('${
-//                                   cliente.id
-//                                 }' , '${
-//             cliente._id
-//           }')">Actualizar Cliente</button>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-
-
-//                 </td> 
-//                 <td><i class="bi bi-x-circle" data-value='${
-//                   cliente._id
-//                 }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i></td>
+                                    <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" onclick="updateClient('${
+                                                                  cliente.id
+                                                                }' , '${
+                                           cliente._id
+                                            }')">Actualizar Cliente</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-//             `;
+                </td> 
+                <td><i class="bi bi-x-circle" data-value='${
+                  cliente._id
+                }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i></td>
 
-//           const option = document.createElement("option");
-//           option.value = cliente.id;
-//           option.innerText = cliente.id;
-//           select.appendChild(option);
 
-//           document.getElementById("table-body").appendChild(row);
-//         });
-//       })
-//       .catch((error) => console.log(error));
-//   });
-// };
+            `;
+
+          const option = document.createElement("option");
+          option.value = cliente.id;
+          option.innerText = cliente.id;
+          select.appendChild(option);
+
+          document.getElementById("table-body").appendChild(row);
+        });
+      })
+      .catch((error) => console.log(error));
+  });
+};
 
 
 const unlockInputs = () => {
@@ -149,6 +150,7 @@ function cancelUpdate() {
   document.getElementById("updateButton").classList.remove("d-none");
 }
 
+loadTable();
 const updateClient = () => {
  
   const updatedName = document.getElementById("update-name").value;
@@ -157,6 +159,7 @@ const updateClient = () => {
   const updatedUsername = document.getElementById("update-username").value;
   const updatedPassword = document.getElementById("update-password").value;
 
+  
   validateFields(iduser, updatedName, updatedCelphone, updatedEmail, updatedUsername, updatedPassword);
   const hasErrors = Object.values(errorMessages).some(
     (message) => message !== ""
@@ -218,186 +221,183 @@ const updateClient = () => {
 
 
 //es para una tabla 
-const loadTable2 = () => {
-  document.getElementById("table-body").innerHTML = "";
+// const loadTable2 = () => {
+//   document.getElementById("table-body").innerHTML = "";
 
-  const iduser = localStorage.getItem("iduser");
-  console.log(iduser);
+//   const iduser = localStorage.getItem("iduser");
+//   console.log(iduser);
 
-  if (!iduser || iduser === "undefined") {
-    // Manejar el caso en que iduser no esté definido o sea "undefined"
-    return;
-  }
+//   if (!iduser || iduser === "undefined") {
+//     // Manejar el caso en que iduser no esté definido o sea "undefined"
+//     return;
+//   }
 
-  return new Promise((resolve, reject) => {
-    fetch(`${apiUrl}/${iduser}`, {
-      headers: {
-        Authorization: `${authorizationToken}`,
-      },
-    })
-      .then((datos) => datos.json())
-      .then((datos) => {
-        datos.data.forEach((cliente) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-          <td>${cliente.id}</td>
-          <td>${cliente.name}</td>
-          <td>${cliente.celphone || "N/A"}</td>
-          <td>${cliente.email || "N/A"}</td>
-          <td>      
-              <!-- Resto del contenido del row... -->
-          </td> 
-          <td>
-              <i class="bi bi-x-circle" data-value='${cliente._id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
-          </td>
-        `;
+//   return new Promise((resolve, reject) => {
+//     fetch(`${apiUrl}/${iduser}`, {
+//       headers: {
+//         Authorization: `${authorizationToken}`,
+//       },
+//     })
+//       .then((datos) => datos.json())
+//       .then((datos) => {
+//         datos.data.forEach((cliente) => {
+//           const row = document.createElement("tr");
+//           row.innerHTML = `
+//           <td>${cliente.id}</td>
+//           <td>${cliente.name}</td>
+//           <td>${cliente.celphone || "N/A"}</td>
+//           <td>${cliente.email || "N/A"}</td>
+//           <td>      
+//               <!-- Resto del contenido del row... -->
+//           </td> 
+//           <td>
+//               <i class="bi bi-x-circle" data-value='${cliente._id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+//           </td>
+//         `;
 
-          document.getElementById("table-body").appendChild(row);
+//           document.getElementById("table-body").appendChild(row);
 
-        });
-        })
-          .catch((error) => console.log(error));
-      });
-  };
+//         });
+//         })
+//           .catch((error) => console.log(error));
+//       });
+//   };
 //es para fromulario
-  const loadTable = () => {
-    const iduser = localStorage.getItem("iduser");
+  // const loadTable = () => {
+  //   const iduser = localStorage.getItem("iduser");
   
-    if (!iduser || iduser === "undefined") {
-      // Manejar el caso en que iduser no esté definido o sea "undefined"
-      return;
-    }
+  //   if (!iduser || iduser === "undefined") {
+  //     // Manejar el caso en que iduser no esté definido o sea "undefined"
+  //     return;
+  //   }
   
-    return new Promise((resolve, reject) => {
-      fetch(`${apiUrl}/${iduser}`, {
-        headers: {
-          Authorization: `${authorizationToken}`,
-        },
-      })
-        .then((datos) => datos.json())
-        .then((datos) => {
-          datos.data.forEach((cliente) => {
-            document.getElementById("update-name").value = cliente.name;
-            document.getElementById("update-celphone").value = cliente.celphone || '';
-            document.getElementById("update-email").value = cliente.email || '';
-            document.getElementById("update-username").value = cliente.username || '';
-            document.getElementById("update-password").value = cliente.password|| '';
+  //   return new Promise((resolve, reject) => {
+  //     fetch(`${apiUrl}/${iduser}`, {
+  //       headers: {
+  //         Authorization: `${authorizationToken}`,
+  //       },
+  //     })
+  //       .then((datos) => datos.json())
+  //       .then((datos) => {
+  //         datos.data.forEach((cliente) => {
+  //           document.getElementById("update-name").value = cliente.name;
+  //           document.getElementById("update-celphone").value = cliente.celphone || '';
+  //           document.getElementById("update-email").value = cliente.email || '';
+  //           document.getElementById("update-username").value = cliente.username || '';
+  //           document.getElementById("update-password").value = cliente.password|| '';
 
 
 
-          // Actualiza el formulario con los datos del cliente
-          // document.getElementById("client-details-form").innerHTML = `
-          //   <div class="mb-3">
-          //     <label for="update-name" class="form-label">Nombre</label>
-          //     <input type="text" class="form-control" id="update-name" value="${cliente.name}" disabled>
-          //   </div>
-          //   <div class="mb-3">
-          //     <label for="update-celphone" class="form-label">Teléfono</label>
-          //     <input type="tel" class="form-control" id="update-celphone" value="${cliente.celphone || ''}" disabled>
-          //   </div>
-          //   <div class="mb-3">
-          //     <label for="update-email" class="form-label">Correo Electrónico</label>
-          //     <input type="email" class="form-control" id="update-email" value="${cliente.email || ''}" disabled>
-          //   </div>
-          //   <!-- Agrega aquí otros campos del cliente según sea necesario... -->
-          // `;
-        });
-        })
-        .catch((error) => console.log(error));
-    });
-  };
+  //         // Actualiza el formulario con los datos del cliente
+  //         // document.getElementById("client-details-form").innerHTML = `
+  //         //   <div class="mb-3">
+  //         //     <label for="update-name" class="form-label">Nombre</label>
+  //         //     <input type="text" class="form-control" id="update-name" value="${cliente.name}" disabled>
+  //         //   </div>
+  //         //   <div class="mb-3">
+  //         //     <label for="update-celphone" class="form-label">Teléfono</label>
+  //         //     <input type="tel" class="form-control" id="update-celphone" value="${cliente.celphone || ''}" disabled>
+  //         //   </div>
+  //         //   <div class="mb-3">
+  //         //     <label for="update-email" class="form-label">Correo Electrónico</label>
+  //         //     <input type="email" class="form-control" id="update-email" value="${cliente.email || ''}" disabled>
+  //         //   </div>
+  //         //   <!-- Agrega aquí otros campos del cliente según sea necesario... -->
+  //         // `;
+  //       });
+  //       })
+  //       .catch((error) => console.log(error));
+  //   });
+  // };
 
 
 
-
-  loadTable();
-
-  const findById = () => {
-    const option = document.getElementById("select-id");
-    if (option.value !== "Seleccione un ID") {
-      return new Promise((resolve, reject) => {
-        fetch(
-          `http://localhost:4000/client/${option.value}`,
-          {
-            headers: {
-              Authorization: `${authorizationToken}`,
-            },
-          }
-        )
-          .then((data) => {
-            if (!data.ok) {
-              throw new Error(`Error: ${data.status} - ${data.statusText}`);
-            }
-            return data.json();
-          })
-          .then((result) => {
-            const datos = result.data[0];
-            document.getElementById("table-body").innerHTML = "";
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                    <td>${datos.id}</td>
-                    <td>${datos.name}</td>
-                    <td>${datos.celphone || "N/A"}</td>
-                    <td>${datos.email || "N/A"}</td>
-                    <td>      
-                    <i class="bi bi-pencil-fill"
-                    type="button" 
-                    data-bs-toggle="modal"
-                    data-bs-target="#editModal${datos._id}" 
-                    style="color: #FFC300; font-size: 2rem;">
-                    </i>
+  // const findById = () => {
+  //   const option = document.getElementById("select-id");
+  //   if (option.value !== "Seleccione un ID") {
+  //     return new Promise((resolve, reject) => {
+  //       fetch(
+  //         `http://localhost:4000/client/${option.value}`,
+  //         {
+  //           headers: {
+  //             Authorization: `${authorizationToken}`,
+  //           },
+  //         }
+  //       )
+  //         .then((data) => {
+  //           if (!data.ok) {
+  //             throw new Error(`Error: ${data.status} - ${data.statusText}`);
+  //           }
+  //           return data.json();
+  //         })
+  //         .then((result) => {
+  //           const datos = result.data[0];
+  //           document.getElementById("table-body").innerHTML = "";
+  //           const row = document.createElement("tr");
+  //           row.innerHTML = `
+  //                   <td>${datos.id}</td>
+  //                   <td>${datos.name}</td>
+  //                   <td>${datos.celphone || "N/A"}</td>
+  //                   <td>${datos.email || "N/A"}</td>
+  //                   <td>      
+  //                   <i class="bi bi-pencil-fill"
+  //                   type="button" 
+  //                   data-bs-toggle="modal"
+  //                   data-bs-target="#editModal${datos._id}" 
+  //                   style="color: #FFC300; font-size: 2rem;">
+  //                   </i>
             
-                    <!-- Modal -->
-                    <div class="modal fade" id="editModal${datos._id
-              }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="editModalLabel">Editar Cliente</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">               
+  //                   <!-- Modal -->
+  //                   <div class="modal fade" id="editModal${datos._id
+  //             }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  //                       <div class="modal-dialog">
+  //                           <div class="modal-content">
+  //                               <div class="modal-header">
+  //                                   <h1 class="modal-title fs-5" id="editModalLabel">Editar Cliente</h1>
+  //                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  //                               </div>
+  //                               <div class="modal-body">               
                 
-                                    <div class="mb-3">
-                                        <label for="update-name" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="update-name${datos._id
-              }" value="${datos.name}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="update-celphone" class="form-label">Teléfono</label>
-                                                            <input type="tel" class="form-control" id="update-celphone${datos._id
-              }" value="${datos.celphone
-              }">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="update-email" class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="update-email${datos._id
-              }" value="${datos.email}">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
+  //                                   <div class="mb-3">
+  //                                       <label for="update-name" class="form-label">Nombre</label>
+  //                                       <input type="text" class="form-control" id="update-name${datos._id
+  //             }" value="${datos.name}">
+  //                                   </div>
+  //                                   <div class="mb-3">
+  //                                       <label for="update-celphone" class="form-label">Teléfono</label>
+  //                                                           <input type="tel" class="form-control" id="update-celphone${datos._id
+  //             }" value="${datos.celphone
+  //             }">
+  //                                   </div>
+  //                                   <div class="mb-3">
+  //                                       <label for="update-email" class="form-label">Correo Electrónico</label>
+  //                                       <input type="email" class="form-control" id="update-email${datos._id
+  //             }" value="${datos.email}">
+  //                                   </div>
+  //                               </div>
+  //                               <div class="modal-footer">
                                 
 
-                                    <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="updateClient('${datos.id
-              }' , '${datos._id
-              }')">Actualizar Cliente</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                  </td> 
-                    <td><i class="bi bi-x-circle" data-value='${datos._id
-              }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i></td>
+  //                                   <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
+  //                               <button type="button" class="btn btn-primary" onclick="updateClient('${datos.id
+  //             }' , '${datos._id
+  //             }')">Actualizar Cliente</button>
+  //                               </div>
+  //                           </div>
+  //                       </div>
+  //                   </div>
+  //                 </td> 
+  //                   <td><i class="bi bi-x-circle" data-value='${datos._id
+  //             }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i></td>
 
 
-                `;
-            document.getElementById("table-body").appendChild(row);
-          })
-          .catch((error) => reject(error));
-      });
-    }
-  };
+  //               `;
+  //           document.getElementById("table-body").appendChild(row);
+  //         })
+  //         .catch((error) => reject(error));
+  //     });
+  //   }
+  // };
 
   const drop = (id) => {
     const URI = `http://localhost:4000/client/${id}`;
@@ -436,6 +436,8 @@ const loadTable2 = () => {
     document.getElementById("name").value = "";
     document.getElementById("celphone").value = "";
     document.getElementById("email").value = "";
+    document.getElementById("user").value = "";
+    document.getElementById("passwordRegister").value = "";
   };
 
   const addClient = () => {
@@ -444,7 +446,7 @@ const loadTable2 = () => {
     const celphone = document.getElementById("celphone").value;
     const email = document.getElementById("email").value;
     const user = document.getElementById("user").value;
-    const password = document.getElementById("password").value;
+   const password= document.getElementById("passwordRegister").value;
 
     if (!name) {
       alert("Por favor, ingresa el nombre del cliente.");
@@ -466,8 +468,8 @@ const loadTable2 = () => {
       name: name,
       celphone: celphone,
       email: email,
-      user: user,
-      password: password,
+      username: user,
+      password:password
     };
 
     fetch(apiUrl, {
