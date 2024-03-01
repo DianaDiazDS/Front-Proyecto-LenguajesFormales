@@ -17,8 +17,8 @@ router.get("/dashboard-clientes", (req, res) =>
 res.sendFile(path.join(__dirname + "../../views/dashboard-client.html"))
 );
 
-router.get("/dashboard-translations", (req, res) =>
-  res.sendFile(path.join(__dirname + "../../views/dashboard-transaction.html"))
+router.get("/dashboard-transactions", (req, res) =>
+  res.sendFile(path.join(__dirname + "../../views/dashboard-transaction2.html"))
 );
 
 // router.get("/dashboard-registro", (req, res) =>
