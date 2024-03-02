@@ -26,8 +26,8 @@ const loadTable = () => {
   document.getElementById("table-body").innerHTML = "";
   document.getElementById("select-id").innerHTML = "";
   const optionDefault = document.createElement("option");
-  optionDefault.value = "Seleccione un ID";
-  optionDefault.innerText = "Seleccione un ID";
+  optionDefault.value = "Seleccione una categoria";
+  optionDefault.innerText = "Seleccione una categoria";
   document.getElementById("select-id").appendChild(optionDefault);
 
   return new Promise((resolve, reject) => {
@@ -133,8 +133,8 @@ const loadTable = () => {
             `;
 
           const option = document.createElement("option");
-          option.value = transaccion.id;
-          option.innerText = transaccion.id;
+          option.value = transaccion.category;
+          option.innerText = transaccion.category;
           select.appendChild(option);
 
           document.getElementById("table-body").appendChild(row);
@@ -148,12 +148,6 @@ const chargeSelect = () => {
   const URIC = "http://localhost:4000/client";
 
   fetch(URIC
-  //   , {
-  //   headers: {
-  //     Authorization: `${authorizationToken}`,
-
-  //   },
-  // }
   )
     .then((response) => response.json())
     .then((data) => {
@@ -166,20 +160,7 @@ const chargeSelect = () => {
         select.appendChild(option);
 
 
-        // // document.getElementById("table-body").innerHTML = "";
-        // document.getElementById("select-id").innerHTML = "";
-        // const optionDefault = document.createElement("option");
-        // optionDefault.value = "Seleccione un ID";
-        // optionDefault.innerText = "Seleccione un ID";
-        // document.getElementById("select-id").appendChild(optionDefault);
-
-
-
-        // const select = document.createElement("option");
-        // select.value = element._id;
-        // select.textContent = element.name;
-
-        // document.getElementById("select-id").appendChild(select);
+       
       });
     });
 };
@@ -187,13 +168,13 @@ const chargeSelect = () => {
 loadTable();
 chargeSelect();
 
-// cambiar a findcategoria
+
 const findById = () => {
   const option = document.getElementById("select-id");
-  if (option.value !== "Seleccione un ID") {
+  if (option.value !== "Seleccione una categoria") {
     return new Promise((resolve, reject) => {
       fetch(
-        `http://localhost:4000/transaction/${option.value}`,
+        `http://localhost:4000/transaction/categoria/${option.value}`,
         {
           headers: {
             Authorization: `${authorizationToken}`,
@@ -207,25 +188,30 @@ const findById = () => {
           return data.json();
         })
         .then((result) => {
-          const datos = result.data[0];
           document.getElementById("table-body").innerHTML = "";
-          const row = document.createElement("tr");
+          result.data.forEach((transaccion) => {
+            const row = document.createElement("tr");
+    
           row.innerHTML = `
-                    <td>${datos.id}</td>
-                    <td>${datos.name}</td>
-                    <td>${datos.celphone || "N/A"}</td>
-                    <td>${datos.email || "N/A"}</td>
-                    <td>      
+          <td>${transaccion.id}</td>
+          <td>${transaccion.amount}</td>
+          <td>${transaccion.status}</td>
+          <td>${transaccion.entityname}</td>
+          <td>${transaccion.paymentDate}</td>
+          <td>${transaccion.endDate}</td>
+          <td>${transaccion.category}</td>
+          <td>${transaccion.client.name}</td>
+                <td>      
+                
                     <i class="bi bi-pencil-fill"
                     type="button" 
                     data-bs-toggle="modal"
-                    data-bs-target="#editModal${datos._id}" 
+                    data-bs-target="#editModal${transaccion._id}" 
                     style="color: #FFC300; font-size: 2rem;">
                     </i>
-            
                     <!-- Modal -->
                     <div class="modal fade" id="editModal${
-                      datos._id
+                      transaccion._id
                     }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -233,51 +219,74 @@ const findById = () => {
                                     <h1 class="modal-title fs-5" id="editModalLabel">Editar transaccion</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">               
+                                <div class="modal-body">            
                 
                                     <div class="mb-3">
-                                        <label for="update-name" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="update-name${
-                                          datos._id
-                                        }" value="${datos.name}">
+                                        <label for="update-amount" class="form-label">cantidad</label>
+                                        <input type="text" class="form-control" id="update-amount${
+                                          transaccion._id
+                                        }" value="${transaccion.amount}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="update-celphone" class="form-label">Teléfono</label>
-                                                            <input type="tel" class="form-control" id="update-celphone${
-                                                              datos._id
-                                                            }" value="${
-            datos.celphone
-          }">
+                                        <label for="update-status" class="form-label">estado</label>
+                                        <input type="tel" class="form-control" id="update-status${
+                                          transaccion._id
+                                        }" value="${transaccion.status}">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="update-email" class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="update-email${
-                                          datos._id
-                                        }" value="${datos.email}">
+                                        <label for="update-paymentDate" class="form-label">fecha pago</label>
+                                        <input type="text" class="form-control" id="update-paymentDate${
+                                          transaccion._id
+                                        }" value="${transaccion.paymentDate}">
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="update-endDate" class="form-label">fecha limite</label>
+                                        <input type="text" class="form-control" id="update-endDate${
+                                          transaccion._id
+                                        }" value="${transaccion.endDate}">
+                                    </div>
+                                    <div class="mb-3">
+                                    <label for="update-category" class="form-label">categoria</label>
+                                    <input type="text" class="form-control" id="update-category${
+                                      transaccion._id
+                                    }" value="${transaccion.category}">
+                                     </div>
+                                    //  cliente
+                                    <div class="mb-3">
+                                    <label for="update-client" class="form-label">clinte</label>
+                                    <input type="text" class="form-control" id="update-client${
+                                      transaccion._id
+                                    }" value="${transaccion.client.name}">
+                                     </div>
+                                    
+                                    
                                 </div>
-                                <div class="modal-footer">
-                                
 
+
+                                <div class="modal-footer">                     
                                     <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="updateClient('${
-                                  datos.id
-                                }' , '${
-            datos._id
-          }')">Actualizar transaccion</button>
+                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${ transaccion.id  }' , '${ transaccion._id }')">Actualizar transaccion</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                  </td> 
-                    <td><i class="bi bi-x-circle" data-value='${
-                      datos._id
-                    }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i></td>
+            
+
+                </td> 
+
+                <td>
+                <i class="bi bi-x-circle" data-value='${ transaccion._id }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+                </td>
+
+                    
+            `;
 
 
-                `;
+
+
           document.getElementById("table-body").appendChild(row);
-        })
+        });
+      })
         .catch((error) => reject(error));
     });
   }
@@ -326,80 +335,6 @@ const limpiarCampos = () => {
   document.getElementById("email").value = "";
 };
 
-// const findByIdUsuario = (clientId) => {
-//   // return new Promise((resolve, reject) => {
-//   //   fetch(
-//   //     `http://localhost:4000/client/${clientId}`
-//   //   )
-//   //     .then((data) => {
-//   //       if (!data.ok) {
-//   //         throw new Error(`Error: ${data.status} - ${data.statusText}`);
-//   //       }
-//   //       return data.json();
-//   //     })
-//   //     .then((result) => {
-//   //       const datos = result.data[0];
-//   //       resolve(datos._id); // Devuelve el _id obtenido
-//   //     })
-//   //     .catch((error) => reject(error));
-//   // });
-
-//   return fetch(
-//     `http://localhost:4000/client/${clientId}`
-//   )
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`Error: ${response.status} - ${response.statusText}`);
-//       }
-//       return response.json();
-//     })
-//     .then((result) => {
-
-//       // const idcliente
-//       // data.data.forEach((element) => {
-
-//       //   const option = document.createElement("option");
-//       //   option.value = element.id;
-//       //   option.innerText = element.id;
-//       //   select.appendChild(option);
-
-
-//       const data = result.data; // Obtener la propiedad 'data' del resultado
-//       if (data.length > 0) { // Verificar que haya datos devueltos
-//         console.log("datos encontrado",data._id)
-//         return data._id; // Devolver el _id del primer elemento encontrado
-//       } else {
-//         throw new Error("No se encontraron resultados para el ID especificado.");
-//       }
-//     });
-// };
-
-
-// const findByIdUsuario = (clientId) => {
-//   return fetch(
-//     `http://localhost:4000/client/${clientId}`,
-//     {
-//       headers: {
-//         Authorization: `${authorizationToken}`,
-//       },
-//     }
-//   )
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`Error: ${response.status} - ${response.statusText}`);
-//       }
-//       return response.json();
-//     })
-//     .then((result) => {
-//       const data = result.data; // Obtener la propiedad 'data' del resultado
-//       if (data.length > 0) { // Verificar que haya datos devueltos
-//         console.log("dato enosaaaaa",data[0]._id)
-//         return data[0]._id; // Devolver el _id del primer elemento encontrado
-//       } else {
-//         throw new Error("No se encontraron resultados para el ID especificado.");
-//       }
-//     });
-// };
 
 
 let clientIdFound = null;
