@@ -30,6 +30,13 @@ const loadTable = () => {
   optionDefault.innerText = "Seleccione una categoria";
   document.getElementById("select-id").appendChild(optionDefault);
 
+  const clientId = localStorage.getItem("iduser");
+  if (!clientId) {
+    console.error("No se encontró el ID del cliente en el localStorage");
+    return;
+  }
+
+
   return new Promise((resolve, reject) => {
     fetch(apiUrl, {
       headers: {
@@ -40,8 +47,20 @@ const loadTable = () => {
       .then((datos) => {
         const select = document.getElementById("select-id");
 
+          // console.log("idusuariao",clientId)
+          // // Filtrar las transacciones del cliente actual
+          // const clientTransactions = datos.data.filter((transaccion) => transaccion.client.id === clientId);
+    
+          // // Verificar si se encontraron transacciones para este cliente
+          // if (clientTransactions.length === 0) {
+          //   console.log("No se encontraron transacciones para este cliente");
+            
+          // }
+
         datos.data.forEach((transaccion) => {
-          console.log("clienteeee",transaccion.client)
+          // console.log("clienteeee",transaccion.client)
+          console.log("clienteeee",transaccion.client.id)
+          if (transaccion.client.id == clientId) {
           const row = document.createElement("tr");
           row.innerHTML = `
           <td>${transaccion.id}</td>
@@ -137,6 +156,7 @@ const loadTable = () => {
           select.appendChild(option);
 
           document.getElementById("table-body").appendChild(row);
+          }
         });
       })
       .catch((erroaddr) => console.log(error));
