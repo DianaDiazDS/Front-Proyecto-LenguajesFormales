@@ -1,4 +1,18 @@
 /********** Template CSS ************/
+
+/* #centrarBoton {
+  display: block; 
+  margin: 12 auto; /
+}
+
+
+
+#mensajeTexto {
+  height: 70px; 
+  width: 100%; 
+  overflow-y: auto;
+} */
+
 h1,
 h2,
 .font-weight-bold {

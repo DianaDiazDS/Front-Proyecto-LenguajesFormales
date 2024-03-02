@@ -26,7 +26,8 @@ document.getElementById("btnLogin").addEventListener("click", () => {
         if (Array.isArray(data.data) && data.data.length > 0) {
           const firstUserData = data.data[0];
           const userId = firstUserData.id;
-          console.log("ID del usuario:", userId);
+          console.log("ID del usuario:", userId, "hols",firstUserData.username)
+          alert("ID del usuario:", userId, "hols",firstUserData.username);
           SaveLocalStorage("iduser", userId);
           
           // Puedes hacer algo con el ID aquí

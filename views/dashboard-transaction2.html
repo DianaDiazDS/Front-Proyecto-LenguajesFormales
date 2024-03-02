@@ -20,60 +20,61 @@
   <body>
     <div class="container-fluid p-0">
       <nav
-        class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5 d-flex justify-content-between"
+      class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5 d-flex justify-content-between"
+    >
+      <a href="/" class="navbar-brand ml-lg-3">
+        <h1 class="text-primary">
+          <span class="text-white">SPA</span> Center
+        </h1>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
-        <a href="/" class="navbar-brand ml-lg-3">
-          <h1 class="text-primary">
-            <span class="text-white">SPA</span> Center
-          </h1>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/dashboard-home"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/dashboard-clientes"
-                >Clientes</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/dashboard-transaction"
-                >Reservaciones</a
-              >
-            </li>
-          </ul>
-        </div>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/" class="nav-link active" onclick="logOut()">
-              Cerrar Sesión
-            </a>
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="/dashboard-home"
+              >Home</a
+            >
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="/dashboard-clientes"
+              >Clientes</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="/dashboard-transactions"
+              >transacciones</a
+            >
+          </li>
+      
         </ul>
-      </nav>
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="/" class="nav-link active" onclick="logOut()">
+            Cerrar Sesión
+          </a>
+        </li>
+      </ul>
+    </nav>
     </div>
 
     <div class="container">
@@ -91,7 +92,7 @@
         <select
           class="form-select"
           id="select-id"
-          onchange="findById()"
+          onchange="findByCategoria()"
           style="
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
@@ -115,10 +116,133 @@
           class="bi bi-plus-circle-fill m-0 p-0"
           style="font-size: 2.3rem; color: blue"
         ></i>
+        <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                Agregar transaccion
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="add-client-form">
+
+                <div class="mb-3">
+                  <label for="mensajeTexto" class="form-label">Escriba la transaccion</label>
+                  
+                  <!-- <input type="text" class="form-control" rows="15" id="mensajeTexto" placeholder="Campo de texto" required /> -->
+                  
+
+                  <div class="row g-3">
+                    <div class="col-md-9">
+                      <!-- <input type="text" class="form-control" rows="15" id="mensajeTexto" placeholder="Campo de texto" required /> -->
+
+                      <textarea class="form-control" rows="5"id="mensajeTexto">transaccion.</textarea>
+                    </div>
+                    <div class="col-md-2">
+                      <p></p>
+                      <button
+                         type="button"class="btn btn-primary"
+                        onclick="addRellenarTransaction()"
+                        >
+                        rellenar
+                      </button>
+                    </div>
+                  </div>
+                  
+
+                </div>    
+
+                <div class="mb-3">
+                  <label for="name" class="form-label">ID</label>
+                  <input type="text" class="form-control" id="id" required />
+                </div>
+                <div class="mb-3">
+                  <label for="amount" class="form-label">cantidad</label>
+                  <input type="text" class="form-control" id="amount"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="status" class="form-label">estado</label>
+                  <input type="tel" class="form-control" id="status" />
+                </div>
+                <div class="mb-3">
+                  <label for="entityname" class="form-label"
+                    >nombre de entidad</label
+                  >
+                  <input type="text" class="form-control" id="entityname" />
+                </div>
+
+                <div class="mb-3">
+                  <label for="paymentDate" class="form-label"
+                    >fecha de pago</label
+                  >
+                  <input type="text" class="form-control" id="paymentDate" />
+                </div>
+
+                <div class="mb-3">
+                  <label for="endDate" class="form-label"
+                    >vencimiento</label
+                  >
+                  <input type="text" class="form-control" id="endDate" />
+                </div>
+
+                <div class="mb-3">
+                  <label for="category" class="form-label"
+                    >categoria</label
+                  >
+                  <input type="text" class="form-control" id="category" />
+                </div>
+
+             
+                
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cerrar
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="addTransaction()"
+              >
+                Agregar trnsaccion
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+        <!-- <i
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop2"
+          class="bi bi-plus-circle-fill m-0 p-0"
+          style="font-size: 2.3rem; color: blue"
+        ></i>
 
         <div
           class="modal fade"
-          id="staticBackdrop"
+          id="staticBackdrop2"
           data-bs-backdrop="static"
           data-bs-keyboard="false"
           tabindex="-1"
@@ -129,7 +253,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  Agregar cliente
+                  Agregar transaccion
                 </h1>
                 <button
                   type="button"
@@ -140,77 +264,12 @@
               </div>
               <div class="modal-body">
                 <form id="add-client-form">
-                  <div class="mb-3">
-                    <label for="name" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="id" required />
-                  </div>
-                  <div class="mb-3">
-                    <label for="amount" class="form-label">cantidad</label>
-                    <input type="text" class="form-control" id="amount"
-                      required
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="status" class="form-label">estado</label>
-                    <input type="tel" class="form-control" id="status" />
-                  </div>
-                  <div class="mb-3">
-                    <label for="entityname" class="form-label"
-                      >nombr entidad</label
-                    >
-                    <input type="text" class="form-control" id="entityname" />
-                  </div>
 
                   <div class="mb-3">
-                    <label for="paymentDate" class="form-label"
-                      >fecha de pago</label
-                    >
-                    <input type="text" class="form-control" id="paymentDate" />
-                  </div>
+                    <label for="mensajeTexto" class="form-label">mensaje de texto</label>
+                    <input type="text" class="form-control" rows="15" id="mensajeTexto" required />
+                  </div>    
 
-                  <div class="mb-3">
-                    <label for="endDate" class="form-label"
-                      >vencimiento</label
-                    >
-                    <input type="text" class="form-control" id="endDate" />
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="category" class="form-label"
-                      >categoria</label
-                    >
-                    <input type="text" class="form-control" id="category" />
-                  </div>
-
-                  <!-- <div class="mb-3">
-                    <label for="category" class="form-label"
-                      >client id</label
-                    >
-                    <input type="text" class="form-control" id="category" />
-                  </div> -->
-
-                  <!-- <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    id="clientnSend"
-                  >
-                    <option selected>Cliente</option>
-                  </select> -->
-                  <select
-                      class="form-select"
-                      id="select-id2"
-                      style="
-                        border-top-right-radius: 10px;
-                        border-bottom-right-radius: 10px;
-                        max-height: 3rem;
-                      "
-                    >
-                      <option  value="Seleccione un ID">Seleccione un IDa</option>
-                </select>
-
-                <!-- onchange="chargeSelect()" 
-                
-                      onclick="chargeSelect()"-->
                 </form>
               </div>
               <div class="modal-footer">
@@ -231,12 +290,19 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
+
+
+
+
+
       </div>
 
       <div class="table-responsive pt-3">
         <table class="table table-striped">
           <thead class="table-dark">
+            <!-- <th>Cliente</th> -->
+
             <tr>
               <th>ID</th>
               <th>cantidad</th>
@@ -245,7 +311,6 @@
               <th>fecha de pago</th>
               <th>vencimiento</th>
               <th>categoria</th>
-              <th>Cliente</th>
               <th>Editar</th>
               <th>Eliminar</th>
             </tr>
