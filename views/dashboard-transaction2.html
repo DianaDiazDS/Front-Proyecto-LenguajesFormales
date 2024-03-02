@@ -91,7 +91,7 @@
         <select
           class="form-select"
           id="select-id"
-          onchange="findById()"
+          onchange="findByCategoria()"
           style="
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
@@ -141,15 +141,29 @@
               <form id="add-client-form">
 
                 <div class="mb-3">
-                  <label for="mensajeTexto" class="form-label">mensaje de texto</label>
-                  <input type="text" class="form-control" rows="15" id="mensajeTexto" required />
-                  <button
-                type="button"
-                class="btn btn-primary"
-                onclick="addRellenarTransaction()"
-              >
-                rellenar
-              </button>
+                  <label for="mensajeTexto" class="form-label">Escriba la transaccion</label>
+                  
+                  <!-- <input type="text" class="form-control" rows="15" id="mensajeTexto" placeholder="Campo de texto" required /> -->
+                  
+
+                  <div class="row g-3">
+                    <div class="col-md-9">
+                      <!-- <input type="text" class="form-control" rows="15" id="mensajeTexto" placeholder="Campo de texto" required /> -->
+
+                      <textarea class="form-control" rows="5"id="mensajeTexto">transaccion.</textarea>
+                    </div>
+                    <div class="col-md-2">
+                      <p></p>
+                      <button
+                         type="button"class="btn btn-primary"
+                        onclick="addRellenarTransaction()"
+                        >
+                        rellenar
+                      </button>
+                    </div>
+                  </div>
+                  
+
                 </div>    
 
                 <div class="mb-3">
@@ -164,7 +178,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="status" class="form-label">estado</label>
-                  <input type="tel" class="form-control" id="status" />
+                  <input type="text" class="form-control" id="status" />
                 </div>
                 <div class="mb-3">
                   <label for="entityname" class="form-label"
