@@ -125,7 +125,7 @@ const loadTable = () => {
                 </td> 
 
                 <td>
-                <i class="bi bi-x-circle" data-value='${ transaccion._id }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+                <i class="bi bi-x-circle" data-value='${ transaccion.id }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
                 </td>
 
                     
@@ -274,7 +274,7 @@ const findById = () => {
                 </td> 
 
                 <td>
-                <i class="bi bi-x-circle" data-value='${ transaccion._id }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+                <i class="bi bi-x-circle" data-value='${ transaccion.id }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
                 </td>
 
                     
