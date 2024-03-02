@@ -22,6 +22,23 @@ fetch(apiUrl, {
   .then((data) => { })
   .catch((error) => console.error(error));
 
+
+
+
+ 
+  const formatDate = (date) => {
+    const fechaOriginal = new Date(date);
+    const año = fechaOriginal.getUTCFullYear();
+    const mes = ("0" + (fechaOriginal.getUTCMonth() + 1)).slice(-2); 
+    const dia = ("0" + fechaOriginal.getUTCDate()).slice(-2);
+    const horas = ("0" + fechaOriginal.getUTCHours()).slice(-2);
+    const minutos = ("0" + fechaOriginal.getUTCMinutes()).slice(-2);
+
+    const fechaFormateada = `${dia}/${mes}/${año}`;
+    return fechaFormateada;
+};
+
+
 const loadTable = () => {
   document.getElementById("table-body").innerHTML = "";
   document.getElementById("select-id").innerHTML = "";
@@ -50,9 +67,13 @@ const loadTable = () => {
 
 
         datos.data.forEach((transaccion) => {
-          // console.log("clienteeee",transaccion.client)
-          // <td>${transaccion.client.name}</td>
- 
+         
+
+          const paymentDate = formatDate(transaccion.paymentDate);
+          const endDate = formatDate(transaccion.endDate);
+          console.log("fecha",endDate)
+
+
           if (transaccion.client.id == clientId) {
           console.log("clienteeee", transaccion.client.id)
 
@@ -62,8 +83,8 @@ const loadTable = () => {
           <td>${transaccion.amount}</td>
           <td>${transaccion.status}</td>
           <td>${transaccion.entityname}</td>
-          <td>${transaccion.paymentDate}</td>
-          <td>${transaccion.endDate}</td>
+          <td>${paymentDate}</td>
+          <td>${endDate}</td>
           <td>${transaccion.category}</td>
                 <td>      
                 
@@ -102,12 +123,12 @@ const loadTable = () => {
                                     <div class="mb-3">
                                         <label for="update-paymentDate" class="form-label">fecha pago</label>
                                         <input type="text" class="form-control" id="update-paymentDate${transaccion._id
-              }" value="${transaccion.paymentDate}">
+              }" value="${paymentDate}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-endDate" class="form-label">fecha limite</label>
                                         <input type="text" class="form-control" id="update-endDate${transaccion._id
-              }" value="${transaccion.endDate}">
+              }" value="${endDate}">
                                     </div>
                                     <div class="mb-3">
                                     <label for="update-category" class="form-label">categoria</label>
@@ -149,30 +170,9 @@ const loadTable = () => {
       .catch((erroaddr) => console.log(error));
   });
 };
-const chargeSelect = () => {
-  console.log("entro a buscar")
-  const URIC = "http://localhost:4000/client";
 
-  fetch(URIC
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const select = document.getElementById("select-id2");
-      data.data.forEach((element) => {
-
-        const option = document.createElement("option");
-        option.value = element.id;
-        option.innerText = element.id;
-        select.appendChild(option);
-
-
-
-      });
-    });
-};
 
 loadTable();
-// chargeSelect();
 
 
 const findByCategoria = () => {
@@ -204,16 +204,17 @@ const findByCategoria = () => {
           }
 
           result.data.forEach((transaccion) => {
-            
+            const paymentDate = formatDate(transaccion.paymentDate);
+            const endDate = formatDate(transaccion.endDate);
+
             const row = document.createElement("tr");
-            // <td>${transaccion.client.name}</td>
             row.innerHTML = `
           <td>${transaccion.id}</td>
           <td>${transaccion.amount}</td>
           <td>${transaccion.status}</td>
           <td>${transaccion.entityname}</td>
-          <td>${transaccion.paymentDate}</td>
-          <td>${transaccion.endDate}</td>
+          <td>${paymentDate}</td>
+          <td>${endDate}</td>
           <td>${transaccion.category}</td>
         
                 <td>      
@@ -253,12 +254,12 @@ const findByCategoria = () => {
                                     <div class="mb-3">
                                         <label for="update-paymentDate" class="form-label">fecha pago</label>
                                         <input type="text" class="form-control" id="update-paymentDate${transaccion._id
-              }" value="${transaccion.paymentDate}">
+              }" value="${paymentDate}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-endDate" class="form-label">fecha limite</label>
                                         <input type="text" class="form-control" id="update-endDate${transaccion._id
-              }" value="${transaccion.endDate}">
+              }" value="${endDate}">
                                     </div>
                                     <div class="mb-3">
                                     <label for="update-category" class="form-label">categoria</label>
@@ -365,18 +366,21 @@ const findByIdUsuario = async (clientId) => {
   const data = result.data;
 
   if (data.length > 0) {
-    clientIdFound = data[0]._id; // Almacena el _id encontrado en la variable local
+    clientIdFound = data[0]._id; 
   } else {
     throw new Error("No se encontraron resultados para el ID especificado.");
   }
 };
 
 const getClientId = () => {
-  return clientIdFound; // Devuelve el _id encontrado o null si no se encontró
+  return clientIdFound; 
 };
 
+
+
+
 function convertirFecha(fecha) {
-  // Definir el mapa de abreviaturas de meses
+  
   const meses = {
     "ene": "01", "feb": "02", "mar": "03", "abr": "04", "may": "05", "jun": "06",
     "jul": "07", "ago": "08", "sep": "09", "oct": "10", "nov": "11", "dic": "12"
@@ -391,6 +395,9 @@ function convertirFecha(fecha) {
   const fechaFormateada = `${dia}/${mesNumerico}/${año}`;
 
   return fechaFormateada;
+}
+function quitarComas(numeroConComas) {
+  return numeroConComas.replace(/,/g, "");
 }
 const addRellenarTransaction=()=>{
   const mensajeTexto = document.getElementById("mensajeTexto").value;
@@ -415,6 +422,8 @@ const addRellenarTransaction=()=>{
     console.log("fecha",endDateMatch[1])
     const fechaFormateada = convertirFecha(endDateMatch[1]);
 
+    const numeroConComas =amountMatch[1];
+    const numeroSinComas = quitarComas(numeroConComas);
 
 
 
@@ -422,7 +431,7 @@ const addRellenarTransaction=()=>{
         console.log("No se pudo extraer la información completa de la transacción.");
         
          }  
-    const amount = amountMatch ? amountMatch[1] : "";
+    const amount = numeroSinComas ? numeroSinComas : "";
     const entityname = entitynameMatch ? entitynameMatch[1] : "";
     const paymentDate = paymentDateMatch ? paymentDateMatch[1] : "";
     const endDate = fechaFormateada ? fechaFormateada : "";
@@ -460,24 +469,25 @@ const addTransaction = () => {
   const endDate = document.getElementById("endDate").value;
   const category = document.getElementById("category").value;
 
-
-  // const clientId = document.getElementById("select-id2").value;
-  const clientId = localStorage.getItem("iduser");
-
-  
+  const clientId = localStorage.getItem("iduser");  
 
   findByIdUsuario(clientId)
     .then(() => {
       const clientnEncontrado = getClientId();
+
       validateFields(id,amount, status, entityname, paymentDate,endDate,category);
           const hasErrors = Object.values(errorMessages).some(
+            
             (message) => message !== ""
           );
       
           if (hasErrors) {
+            alert("hay errires")
             mostrarMensajeError();
             return;
           }
+
+
       const newTransaction = {
         id: id,
         amount: amount,
@@ -500,10 +510,9 @@ const addTransaction = () => {
         body: JSON.stringify(newTransaction),
       })
         .then((response) => {
-          // console.log("b  bb", response.status)
-
+     
           if (!response.ok) {
-            // console.log("a   a", response.status)
+            
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
           }
           return response.json();
@@ -538,6 +547,8 @@ const addTransaction = () => {
 
 
 let errorMessages = {};
+
+
 
 const validateField = (fieldName, value) => {
   switch (fieldName) {
@@ -579,33 +590,59 @@ const validateField = (fieldName, value) => {
         errorMessages[fieldName] = "";
       }
       break;
-      // case "categoria":
-      // const validCategories = ["celular", "recibo", "compra", "gasto"];
-      // if (!validCategories.includes(value)) {
-      //   errorMessages[fieldName] =
-      //     "El campo Categoría debe ser 'celular', 'recibo', 'compra' o 'gasto'.";
-      // } else {
-      //   errorMessages[fieldName] = "";
-      // }
-      // break;
 
-    // Agrega aquí más casos para validar otros campos según sea necesario
+    case "fechapago":
+      const datepagoPattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+      if (!datepagoPattern.test(value)) {
+        errorMessages[fieldName] =
+          "El campo Fecha debe tener el formato dd/mm/yyyy.";
+      } else {
+        errorMessages[fieldName] = "";
+      }
+      break;
+
+    case "fechalimite":
+      const datelimitePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+      if (!datelimitePattern.test(value)) {
+        errorMessages[fieldName] =
+          "El campo Fecha debe tener el formato dd/mm/yyyy.";
+      } else {
+        errorMessages[fieldName] = "";
+      }
+      break;
+
+    case "categoria":
+      const categoriaPattern = /^[A-Za-z\s]+$/;
+      if (!categoriaPattern.test(value)) {
+        errorMessages[fieldName] =
+          "El campo Categoría debe contener solo letras y espacios.";
+      } else {
+        errorMessages[fieldName] = "";
+      }
+      break;
 
     default:
       break;
   }
 };
+
+
 const validateFields = ( id, amount1, status1, entityname1, paymentDate1,endDate1,category1)=> {
   validateField("Id", id);
   validateField("cantidad", amount1);
   validateField("estado", status1);
   validateField("entidad", entityname1);
-  validateField("fechapago", paymentDate1);
+  if ( paymentDate1 !== "") {
+        validateField("fechapago", paymentDate1);
+      }
+  
   validateField("fechalimite", endDate1);
   validateField("categoria", category1);
 
   mostrarMensajeError();
 };
+
+
 
 const mostrarMensajeError = () => {
   const errorMessagesArray = Object.entries(errorMessages).filter(
@@ -628,7 +665,7 @@ const mostrarMensajeError = () => {
 };
 
 const updateTransaction = (transaccionId1, transaccionId) => {
-  // transaccionId1,
+
   const updatedAmount = document.getElementById("update-amount" + transaccionId).value;
   const updatedStatus = document.getElementById("update-status" + transaccionId).value;
   const updatedEntityname = document.getElementById("update-entityname" + transaccionId).value;
@@ -636,6 +673,7 @@ const updateTransaction = (transaccionId1, transaccionId) => {
   const updatedEndDate = document.getElementById("update-endDate" + transaccionId).value;
   const updatedCategory = document.getElementById("update-category" + transaccionId).value;
 
+ 
 
   validateFields(transaccionId1,updatedAmount, updatedStatus, updatedEntityname,updatedPaymentDate,updatedEndDate,updatedCategory);
           const hasErrors = Object.values(errorMessages).some(

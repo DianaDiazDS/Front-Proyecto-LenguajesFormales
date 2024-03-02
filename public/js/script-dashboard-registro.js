@@ -13,69 +13,6 @@ fetch(apiUrl, {
 
 
 
-  // const updateClient2 = (ClienteId1, clientId) => {
-  //   const updatedName = document.getElementById("update-name" + clientId).value;
-  //   const updatedCelphone = document.getElementById(
-  //     "update-celphone" + clientId
-  //   ).value;
-  //   const updatedEmail = document.getElementById("update-email" + clientId).value;
-
-  //   validateFields(ClienteId1, updatedName, updatedCelphone, updatedEmail);
-  //   const hasErrors = Object.values(errorMessages).some(
-  //     (message) => message !== ""
-  //   );
-
-  //   if (hasErrors) {
-  //     mostrarMensajeError();
-  //     return;
-  //   }
-
-  //   const updateData = {
-  //     name: updatedName,
-  //     celphone: updatedCelphone,
-  //     email: updatedEmail,
-  //   };
-
-  //   fetch(
-  //     `http://localhost:4000/client/${ClienteId1}`,
-  //     {
-  //       method: "PATCH",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `${authorizationToken}`,
-  //       },
-  //       body: JSON.stringify(updateData),
-  //     }
-  //   )
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       if (result.state) {
-  //         Swal.fire({
-  //           title: "Actualización exitosa",
-  //           text: `El Cliente ha sido actualizado.`,
-  //           icon: "success",
-  //           confirmButtonText: "Aceptar",
-  //         });
-  //       } else {
-  //         Swal.fire({
-  //           title: "Error al actualizar el cliente",
-  //           text: "Hubo un error al tratar de actualizar en la base de datos.",
-  //           icon: "error",
-  //           confirmButtonText: "Aceptar",
-  //         });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error:", error);
-  //       Swal.fire({
-  //         title: "Error de conexión",
-  //         text: "Hubo un error al tratar de conectar con el servidor.",
-  //         icon: "error",
-  //         confirmButtonText: "Aceptar",
-  //       });
-  //     });
-  // };
-
 
 
 const addClient = () => {
