@@ -19,7 +19,7 @@ fetch(apiUrl, {
   },
 })
   .then((datos) => datos.json())
-  .then((data) => {})
+  .then((data) => { })
   .catch((error) => console.error(error));
 
 const loadTable = () => {
@@ -47,22 +47,16 @@ const loadTable = () => {
       .then((datos) => {
         const select = document.getElementById("select-id");
 
-          // console.log("idusuariao",clientId)
-          // // Filtrar las transacciones del cliente actual
-          // const clientTransactions = datos.data.filter((transaccion) => transaccion.client.id === clientId);
-    
-          // // Verificar si se encontraron transacciones para este cliente
-          // if (clientTransactions.length === 0) {
-          //   console.log("No se encontraron transacciones para este cliente");
-            
-          // }
+
 
         datos.data.forEach((transaccion) => {
           // console.log("clienteeee",transaccion.client)
-          console.log("clienteeee",transaccion.client.id)
+          console.log("clienteeee", transaccion.client.id)
+          // <td>${transaccion.client.name}</td>
+
           if (transaccion.client.id == clientId) {
-          const row = document.createElement("tr");
-          row.innerHTML = `
+            const row = document.createElement("tr");
+            row.innerHTML = `
           <td>${transaccion.id}</td>
           <td>${transaccion.amount}</td>
           <td>${transaccion.status}</td>
@@ -70,7 +64,6 @@ const loadTable = () => {
           <td>${transaccion.paymentDate}</td>
           <td>${transaccion.endDate}</td>
           <td>${transaccion.category}</td>
-          <td>${transaccion.client.name}</td>
                 <td>      
                 
                     <i class="bi bi-pencil-fill"
@@ -80,9 +73,8 @@ const loadTable = () => {
                     style="color: #FFC300; font-size: 2rem;">
                     </i>
                     <!-- Modal -->
-                    <div class="modal fade" id="editModal${
-                      transaccion._id
-                    }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="editModal${transaccion._id
+              }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -93,39 +85,33 @@ const loadTable = () => {
                 
                                     <div class="mb-3">
                                         <label for="update-amount" class="form-label">cantidad</label>
-                                        <input type="text" class="form-control" id="update-amount${
-                                          transaccion._id
-                                        }" value="${transaccion.amount}">
+                                        <input type="text" class="form-control" id="update-amount${transaccion._id
+              }" value="${transaccion.amount}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-status" class="form-label">estado</label>
-                                        <input type="tel" class="form-control" id="update-status${
-                                          transaccion._id
-                                        }" value="${transaccion.status}">
+                                        <input type="tel" class="form-control" id="update-status${transaccion._id
+              }" value="${transaccion.status}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-entityname" class="form-label">entityname</label>
-                                        <input type="tel" class="form-control" id="update-entityname${
-                                          transaccion._id
-                                        }" value="${transaccion.entityname}">
+                                        <input type="tel" class="form-control" id="update-entityname${transaccion._id
+              }" value="${transaccion.entityname}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-paymentDate" class="form-label">fecha pago</label>
-                                        <input type="text" class="form-control" id="update-paymentDate${
-                                          transaccion._id
-                                        }" value="${transaccion.paymentDate}">
+                                        <input type="text" class="form-control" id="update-paymentDate${transaccion._id
+              }" value="${transaccion.paymentDate}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-endDate" class="form-label">fecha limite</label>
-                                        <input type="text" class="form-control" id="update-endDate${
-                                          transaccion._id
-                                        }" value="${transaccion.endDate}">
+                                        <input type="text" class="form-control" id="update-endDate${transaccion._id
+              }" value="${transaccion.endDate}">
                                     </div>
                                     <div class="mb-3">
                                     <label for="update-category" class="form-label">categoria</label>
-                                    <input type="text" class="form-control" id="update-category${
-                                      transaccion._id
-                                    }" value="${transaccion.category}">
+                                    <input type="text" class="form-control" id="update-category${transaccion._id
+              }" value="${transaccion.category}">
                                      </div>
                                     
                                     
@@ -134,7 +120,7 @@ const loadTable = () => {
 
                                 <div class="modal-footer">                     
                                     <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${ transaccion.id  }','${ transaccion._id  }' )">Actualizar transaccion</button>
+                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${transaccion.id}','${transaccion._id}' )">Actualizar transaccion</button>
                                 </div>
                             </div>
                         </div>
@@ -144,18 +130,18 @@ const loadTable = () => {
                 </td> 
 
                 <td>
-                <i class="bi bi-x-circle" data-value='${ transaccion.id }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+                <i class="bi bi-x-circle" data-value='${transaccion.id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
                 </td>
 
                     
             `;
 
-          const option = document.createElement("option");
-          option.value = transaccion.category;
-          option.innerText = transaccion.category;
-          select.appendChild(option);
+            const option = document.createElement("option");
+            option.value = transaccion.category;
+            option.innerText = transaccion.category;
+            select.appendChild(option);
 
-          document.getElementById("table-body").appendChild(row);
+            document.getElementById("table-body").appendChild(row);
           }
         });
       })
@@ -179,7 +165,7 @@ const chargeSelect = () => {
         select.appendChild(option);
 
 
-       
+
       });
     });
 };
@@ -208,10 +194,19 @@ const findById = () => {
         })
         .then((result) => {
           document.getElementById("table-body").innerHTML = "";
+
+
+          const clientId = localStorage.getItem("iduser");
+          if (!clientId) {
+            console.error("No se encontró el ID del cliente en el localStorage");
+            return;
+          }
+
           result.data.forEach((transaccion) => {
+            
             const row = document.createElement("tr");
-    
-          row.innerHTML = `
+            // <td>${transaccion.client.name}</td>
+            row.innerHTML = `
           <td>${transaccion.id}</td>
           <td>${transaccion.amount}</td>
           <td>${transaccion.status}</td>
@@ -219,7 +214,7 @@ const findById = () => {
           <td>${transaccion.paymentDate}</td>
           <td>${transaccion.endDate}</td>
           <td>${transaccion.category}</td>
-          <td>${transaccion.client.name}</td>
+        
                 <td>      
                 
                     <i class="bi bi-pencil-fill"
@@ -229,9 +224,8 @@ const findById = () => {
                     style="color: #FFC300; font-size: 2rem;">
                     </i>
                     <!-- Modal -->
-                    <div class="modal fade" id="editModal${
-                      transaccion._id
-                    }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="editModal${transaccion._id
+              }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -242,39 +236,33 @@ const findById = () => {
                 
                                     <div class="mb-3">
                                         <label for="update-amount" class="form-label">cantidad</label>
-                                        <input type="text" class="form-control" id="update-amount${
-                                          transaccion._id
-                                        }" value="${transaccion.amount}">
+                                        <input type="text" class="form-control" id="update-amount${transaccion._id
+              }" value="${transaccion.amount}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-status" class="form-label">estado</label>
-                                        <input type="tel" class="form-control" id="update-status${
-                                          transaccion._id
-                                        }" value="${transaccion.status}">
+                                        <input type="tel" class="form-control" id="update-status${transaccion._id
+              }" value="${transaccion.status}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-entityname" class="form-label">entityname</label>
-                                        <input type="tel" class="form-control" id="update-entityname${
-                                          transaccion._id
-                                        }" value="${transaccion.entityname}">
+                                        <input type="tel" class="form-control" id="update-entityname${transaccion._id
+              }" value="${transaccion.entityname}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-paymentDate" class="form-label">fecha pago</label>
-                                        <input type="text" class="form-control" id="update-paymentDate${
-                                          transaccion._id
-                                        }" value="${transaccion.paymentDate}">
+                                        <input type="text" class="form-control" id="update-paymentDate${transaccion._id
+              }" value="${transaccion.paymentDate}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="update-endDate" class="form-label">fecha limite</label>
-                                        <input type="text" class="form-control" id="update-endDate${
-                                          transaccion._id
-                                        }" value="${transaccion.endDate}">
+                                        <input type="text" class="form-control" id="update-endDate${transaccion._id
+              }" value="${transaccion.endDate}">
                                     </div>
                                     <div class="mb-3">
                                     <label for="update-category" class="form-label">categoria</label>
-                                    <input type="text" class="form-control" id="update-category${
-                                      transaccion._id
-                                    }" value="${transaccion.category}">
+                                    <input type="text" class="form-control" id="update-category${transaccion._id
+              }" value="${transaccion.category}">
                                      </div>
                                     
                                     
@@ -284,7 +272,7 @@ const findById = () => {
 
                                 <div class="modal-footer">                     
                                     <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${ transaccion.id  }','${ transaccion._id  }' )">Actualizar transaccion</button>
+                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${transaccion.id}','${transaccion._id}' )">Actualizar transaccion</button>
                                 </div>
                             </div>
                         </div>
@@ -294,7 +282,7 @@ const findById = () => {
                 </td> 
 
                 <td>
-                <i class="bi bi-x-circle" data-value='${ transaccion.id }' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+                <i class="bi bi-x-circle" data-value='${transaccion.id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
                 </td>
 
                     
@@ -303,9 +291,9 @@ const findById = () => {
 
 
 
-          document.getElementById("table-body").appendChild(row);
-        });
-      })
+            document.getElementById("table-body").appendChild(row);
+          });
+        })
         .catch((error) => reject(error));
     });
   }
@@ -344,13 +332,13 @@ const drop = (id) => {
 };
 
 const limpiarCampos = () => {
-  document.getElementById("id").value= "";
-   document.getElementById("amount").value= "";
-   document.getElementById("status").value= "";
-   document.getElementById("entityname").value= "";
- document.getElementById("paymentDate").value= "";
-   document.getElementById("endDate").value= "";
-   document.getElementById("category").value= "";
+  document.getElementById("id").value = "";
+  document.getElementById("amount").value = "";
+  document.getElementById("status").value = "";
+  document.getElementById("entityname").value = "";
+  document.getElementById("paymentDate").value = "";
+  document.getElementById("endDate").value = "";
+  document.getElementById("category").value = "";
   document.getElementById("email").value = "";
 };
 
@@ -395,10 +383,10 @@ const addTransaction = () => {
   const paymentDate = document.getElementById("paymentDate").value;
   const endDate = document.getElementById("endDate").value;
   const category = document.getElementById("category").value;
-  
 
-    const clientId = document.getElementById("select-id2").value;
-    findByIdUsuario(clientId)
+
+  const clientId = document.getElementById("select-id2").value;
+  findByIdUsuario(clientId)
     .then(() => {
       const clientnEncontrado = getClientId();
 
@@ -420,7 +408,7 @@ const addTransaction = () => {
       console.error("Error al buscar cliente:", error);
     });
 
-    findByIdUsuario(clientId)
+  findByIdUsuario(clientId)
     .then(() => {
       const clientnEncontrado = getClientId();
 
@@ -557,14 +545,14 @@ const mostrarMensajeError = () => {
   }
 };
 
-const updateTransaction = (transaccionId1,transaccionId) => {
+const updateTransaction = (transaccionId1, transaccionId) => {
   // transaccionId1,
-  const updatedAmount = document.getElementById("update-amount"+transaccionId).value;
-  const updatedStatus = document.getElementById("update-status"+transaccionId).value;
-  const updatedEntityname = document.getElementById("update-entityname"+transaccionId).value;
-  const updatedPaymentDate = document.getElementById("update-paymentDate"+transaccionId).value;
-  const updatedEndDate = document.getElementById("update-endDate"+transaccionId).value;
-  const updatedCategory = document.getElementById("update-category"+transaccionId).value;
+  const updatedAmount = document.getElementById("update-amount" + transaccionId).value;
+  const updatedStatus = document.getElementById("update-status" + transaccionId).value;
+  const updatedEntityname = document.getElementById("update-entityname" + transaccionId).value;
+  const updatedPaymentDate = document.getElementById("update-paymentDate" + transaccionId).value;
+  const updatedEndDate = document.getElementById("update-endDate" + transaccionId).value;
+  const updatedCategory = document.getElementById("update-category" + transaccionId).value;
 
   const updateData = {
     amount: updatedAmount,
@@ -575,7 +563,7 @@ const updateTransaction = (transaccionId1,transaccionId) => {
     category: updatedCategory
   };
 
-  console.log("update.........",updateData)
+  console.log("update.........", updateData)
   fetch(
     `http://localhost:4000/transaction/${transaccionId1}`,
     {
