@@ -51,10 +51,11 @@ const loadTable = () => {
 
         datos.data.forEach((transaccion) => {
           // console.log("clienteeee",transaccion.client)
-          console.log("clienteeee", transaccion.client.id)
           // <td>${transaccion.client.name}</td>
-
+ 
           if (transaccion.client.id == clientId) {
+          console.log("clienteeee", transaccion.client.id)
+
             const row = document.createElement("tr");
             row.innerHTML = `
           <td>${transaccion.id}</td>
@@ -171,7 +172,7 @@ const chargeSelect = () => {
 };
 
 loadTable();
-chargeSelect();
+// chargeSelect();
 
 
 const findById = () => {
@@ -275,7 +276,7 @@ const findById = () => {
                                 <button type="button" class="btn btn-primary" onclick="updateTransaction('${transaccion.id}','${transaccion._id}' )">Actualizar transaccion</button>
                                 </div>
                             </div>
-                        </div>
+                        </div>6
                     </div>
             
 
@@ -385,33 +386,54 @@ const addTransaction = () => {
   const category = document.getElementById("category").value;
 
 
-  const clientId = document.getElementById("select-id2").value;
+  // const clientId = document.getElementById("select-id2").value;
+  const clientId = localStorage.getItem("iduser");
+  // console
+
+  // findByIdUsuario(clientId)
+  //   .then(() => {
+  //     const clientnEncontrado = getClientId();
+
+  //     validateFields(id,amount, status, entityname, paymentDate,endDate,category);
+  //     const hasErrors = Object.values(errorMessages).some(
+  //       (message) => message !== ""
+  //     );
+  
+  //     if (hasErrors) {
+  //       mostrarMensajeError();
+  //       return;
+  //     }
+
+  //     const newTransaction = {
+  //       id: id,
+  //       amount: amount,
+  //       status: status,
+  //       entityname: entityname,
+  //       paymentDate: paymentDate,
+  //       endDate: endDate,
+  //       category: category,
+  //       client: {
+  //         _id: clientnEncontrado,
+  //       },
+  //     };
+
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error al buscar cliente:", error);
+  //   });
+
   findByIdUsuario(clientId)
     .then(() => {
       const clientnEncontrado = getClientId();
-
-      const newTransaction = {
-        id: id,
-        amount: amount,
-        status: status,
-        entityname: entityname,
-        paymentDate: paymentDate,
-        endDate: endDate,
-        category: category,
-        client: {
-          _id: clientnEncontrado,
-        },
-      };
-
-    })
-    .catch((error) => {
-      console.error("Error al buscar cliente:", error);
-    });
-
-  findByIdUsuario(clientId)
-    .then(() => {
-      const clientnEncontrado = getClientId();
-
+      validateFields(id,amount, status, entityname, paymentDate,endDate,category);
+          const hasErrors = Object.values(errorMessages).some(
+            (message) => message !== ""
+          );
+      
+          if (hasErrors) {
+            mostrarMensajeError();
+            return;
+          }
       const newTransaction = {
         id: id,
         amount: amount,
@@ -434,10 +456,10 @@ const addTransaction = () => {
         body: JSON.stringify(newTransaction),
       })
         .then((response) => {
-          console.log("b  bb", response.status)
+          // console.log("b  bb", response.status)
 
           if (!response.ok) {
-            console.log("a   a", response.status)
+            // console.log("a   a", response.status)
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
           }
           return response.json();
@@ -485,43 +507,59 @@ const validateField = (fieldName, value) => {
       }
       break;
 
-    case "Nombre":
-      const nombrePattern = /^[\p{L}ÁÉÍÓÚáéíóúÑñ\s]+$/u;
-      if (!nombrePattern.test(value) || value.length < 3) {
+    case "cantidad":
+      if (isNaN(value) || value <= 0 || value > 2000000) {
         errorMessages[fieldName] =
-          "El campo Nombre debe contener solo letras y tener al menos 3 caracteres.";
+          "El campo Cantidad debe ser un número válido que no supere los 2 millones.";
       } else {
         errorMessages[fieldName] = "";
       }
       break;
-    case "Celphone":
-      const celphonePattern = /^[0-9]{10}$/;
-      if (!celphonePattern.test(value)) {
+
+    case "estado":
+      const validStatus = ["pago", "deuda", "noPago"];
+      if (!validStatus.includes(value)) {
         errorMessages[fieldName] =
-          "El campo Celphone debe contener 10 dígitos numéricos.";
+          "El campo Estado debe ser 'pago', 'deuda' o 'noPago'.";
       } else {
         errorMessages[fieldName] = "";
       }
       break;
-    case "Email":
-      const emailPattern =
-        /^[\w-]+(?:\.[\w-]+)*@(?:gmail\.com|hotmail\.com|uptc\.edu\.co)$/;
-      if (!emailPattern.test(value)) {
+
+    case "entidad":
+      const entidadPattern = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+      if (!entidadPattern.test(value)) {
         errorMessages[fieldName] =
-          "El campo Email debe tener un formato válido (@gmail.com, @hotmail.com, @uptc.edu.co).";
+          "El campo Entidad debe contener solo letras y espacios.";
       } else {
         errorMessages[fieldName] = "";
       }
       break;
+      case "categoria":
+      const validCategories = ["celular", "recibo", "compra", "gasto"];
+      if (!validCategories.includes(value)) {
+        errorMessages[fieldName] =
+          "El campo Categoría debe ser 'celular', 'recibo', 'compra' o 'gasto'.";
+      } else {
+        errorMessages[fieldName] = "";
+      }
+      break;
+
+    // Agrega aquí más casos para validar otros campos según sea necesario
+
     default:
       break;
   }
 };
-const validateFields = (id, updatedName, updatedCelphone, updatedEmail) => {
+const validateFields = ( id, amount1, status1, entityname1, paymentDate1,endDate1,category1)=> {
   validateField("Id", id);
-  validateField("Nombre", updatedName);
-  validateField("Celphone", updatedCelphone);
-  validateField("Email", updatedEmail);
+  validateField("cantidad", amount1);
+  validateField("estado", status1);
+  validateField("entidad", entityname1);
+  validateField("fechapago", paymentDate1);
+  validateField("fechalimite", endDate1);
+  validateField("categoria", category1);
+
   mostrarMensajeError();
 };
 
