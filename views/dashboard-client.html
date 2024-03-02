@@ -84,235 +84,10 @@
       </nav>
     </div>
 
-     <!--Tabla y selects-->
-     <div class="container">
-      <div class="input-group pt-3 d-flex align-items-center">
-        <span
-          class="input-group-text"
-          id="basic-addon1"
-          style="
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-            max-height: 3rem;
-          "
-          >Id para buscar</span
-        >
-        <select
-          class="form-select"
-          id="select-client"
-          style="
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-            max-height: 3rem;
-          "
-        ></select>
-        <i
-          class="bi bi-arrow-clockwise"
-          type="button"
-          id="btn-reload-reservation"
-          style="font-size: 2.3rem"
-        ></i>
-        <!-- Button trigger modal -->
-        <i
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-          class="bi bi-plus-circle-fill m-0 p-0"
-          style="font-size: 2.3rem; color: blue"
-        ></i>
-
-         <!-- Modal -->
-         <div
-         class="modal fade"
-         id="staticBackdrop"
-         data-bs-backdrop="static"
-         data-bs-keyboard="false"
-         tabindex="-1"
-         aria-labelledby="staticBackdropLabel"
-         aria-hidden="true"
-       >
-         <div class="modal-dialog">
-           <div class="modal-content">
-             <div class="modal-header">
-               <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                 Agregar usuario
-               </h1>
-               <button
-                 type="button"
-                 class="btn-close"
-                 data-bs-dismiss="modal"
-                 aria-label="Close"
-                 onclick="clearInputs()"
-               ></button>
-             </div>
-             <div class="modal-body">
-               <form id="add-client-form">
-                 <div class="input-group mb-3">
-                   <span class="input-group-text" id="basic-addon1"
-                     >Id Servicio</span
-                   >
-                   <input
-                     type="text"
-                     class="form-control"
-                     placeholder="id"
-                     aria-label="idDish"
-                     aria-describedby="basic-addon1"
-                     id="idSend"
-                   />
-                 </div>
-                 <div class="input-group mb-3">
-                   <span class="input-group-text" id="basic-addon1"
-                     >Servicio</span
-                   >
-                   <input
-                     type="text"
-                     class="form-control"
-                     placeholder="servicio"
-                     aria-label="name"
-                     aria-describedby="basic-addon1"
-                     id="nameSend"
-                   />
-                 </div>
-
-                 <div class="input-group mb-3">
-                   <span class="input-group-text" id="basic-addon1"
-                     >Inicio de la reservación</span
-                   >
-                   <input
-                     type="datetime-local"
-                     class="form-control"
-                     aria-describedby="basic-addon1"
-                     id="bookingStar"
-                     min=""
-                   />
-                 </div>
-
-                 <div class="input-group mb-3">
-                   <span class="input-group-text" id="basic-addon1"
-                     >Finalizacion de la reservación</span
-                   >
-                   <input
-                     type="datetime-local"
-                     class="form-control"
-                     aria-describedby="basic-addon1"
-                     id="bookingEnd"
-                     min=""
-                   />
-                 </div>
-
-                 <select
-                   class="form-select"
-                   aria-label="Default select example"
-                   id="clientnSend"
-                 >
-                   <option selected>Cliente</option>
-                 </select>
-
-                 <hr />
-
-                 <div class="input-group mb-3">
-                   <span class="input-group-text" id="basic-addon1"
-                     >Comentarios</span
-                   >
-                   <input
-                     type="text"
-                     class="form-control"
-                     placeholder="comentarios"
-                     aria-label="comments"
-                     aria-describedby="basic-addon1"
-                     id="commentsSend"
-                   />
-                 </div>
-               </form>
-             </div>
-             <div class="modal-footer">
-               <button
-                 type="button"
-                 class="btn btn-secondary"
-                 data-bs-dismiss="modal"
-                 onclick="clearInputs()"
-               >
-                 Cancelar
-               </button>
-               <button type="button" class="btn btn-primary" id="Agregar">
-                 Agregar reservación
-               </button>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-
-    <!-- <div class="container">
-      <div class="input-group pt-3 d-flex align-items-center">
-
-        <div
-          class="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-          >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  Agregar cliente
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form id="add-client-form">
-                  <div class="mb-3">
-                    <label for="name" class="form-label">Cedula</label>
-                    <input type="text" class="form-control" id="id" required />
-                  </div>
-                  <div class="mb-3">
-                    <label for="name" class="form-label">Nombre</label>
-                    <input  type="text"  class="form-control" id="name" required   />
-                  </div>
-                  <div class="mb-3">
-                    <label for="celphone" class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control" id="celphone" />
-                  </div>
-                  <div class="mb-3">
-                    <label for="email" class="form-label" >Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" />
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Cerrar
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="addClient()"
-                >
-                  Agregar Cliente
-                </button>
-              </div>
-            </div>
-          </div>
+    
 
 
-        </div> 
-      </div> -->
-
-<!-- //formulario -->
-      <!-- <div id="client-form" class="container mt-3">
+      <<div id="client-form" class="container mt-3">
         <h2>Datos del Cliente</h2>
         <form id="client-details-form">
           <div class="mb-3">
@@ -335,8 +110,9 @@
             <label for="update-password" class="form-label">Contraseña</label>
             <input type="password" class="form-control" id="update-password" disabled>
           </div>
-          < //botones -->
-          <!-- <div class="mb-3">
+         
+
+           <div class="mb-3">
             <button type="button" class="btn btn-primary"id="updateButton" onclick="unlockInputs()">Actualizar</button>
             <button type="button" class="btn btn-success mt-2 d-none" id="acceptButton" onclick="acceptUpdate()">Aceptar</button>
             <button type="button" class="btn btn-success mt-2 d-none" id="cancelButton" onclick="cancelUpdate()">cancelar</button>
@@ -344,25 +120,9 @@
           
         
         </form>
-      </div> --> 
+      </div> 
 
   
-      <div class="table-responsive pt-3">
-        <table class="table table-striped">
-          <thead class="table-dark">
-            <tr>
-              <th id="select-id">ID</th>
-              <th>Nombre</th>
-              <th>Teléfono</th>
-              <th>Email</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
-            </tr>
-          </thead>
-          <tbody id="table-body"></tbody>
-        </table>
-      </div> 
-    
     </div>
 
     
