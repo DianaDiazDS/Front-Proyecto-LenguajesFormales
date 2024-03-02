@@ -85,6 +85,12 @@ const loadTable = () => {
                                         }" value="${transaccion.status}">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="update-entityname" class="form-label">entityname</label>
+                                        <input type="tel" class="form-control" id="update-entityname${
+                                          transaccion._id
+                                        }" value="${transaccion.entityname}">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="update-paymentDate" class="form-label">fecha pago</label>
                                         <input type="text" class="form-control" id="update-paymentDate${
                                           transaccion._id
@@ -102,13 +108,6 @@ const loadTable = () => {
                                       transaccion._id
                                     }" value="${transaccion.category}">
                                      </div>
-                                    //  cliente
-                                    <div class="mb-3">
-                                    <label for="update-client" class="form-label">clinte</label>
-                                    <input type="text" class="form-control" id="update-client${
-                                      transaccion._id
-                                    }" value="${transaccion.client.name}">
-                                     </div>
                                     
                                     
                                 </div>
@@ -116,7 +115,7 @@ const loadTable = () => {
 
                                 <div class="modal-footer">                     
                                     <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${ transaccion.id  }' , '${ transaccion._id }')">Actualizar transaccion</button>
+                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${ transaccion.id  }','${ transaccion._id  }' )">Actualizar transaccion</button>
                                 </div>
                             </div>
                         </div>
@@ -234,6 +233,12 @@ const findById = () => {
                                         }" value="${transaccion.status}">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="update-entityname" class="form-label">entityname</label>
+                                        <input type="tel" class="form-control" id="update-entityname${
+                                          transaccion._id
+                                        }" value="${transaccion.entityname}">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="update-paymentDate" class="form-label">fecha pago</label>
                                         <input type="text" class="form-control" id="update-paymentDate${
                                           transaccion._id
@@ -251,13 +256,7 @@ const findById = () => {
                                       transaccion._id
                                     }" value="${transaccion.category}">
                                      </div>
-                                    //  cliente
-                                    <div class="mb-3">
-                                    <label for="update-client" class="form-label">clinte</label>
-                                    <input type="text" class="form-control" id="update-client${
-                                      transaccion._id
-                                    }" value="${transaccion.client.name}">
-                                     </div>
+                                    
                                     
                                     
                                 </div>
@@ -265,7 +264,7 @@ const findById = () => {
 
                                 <div class="modal-footer">                     
                                     <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${ transaccion.id  }' , '${ transaccion._id }')">Actualizar transaccion</button>
+                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${ transaccion.id  }','${ transaccion._id  }' )">Actualizar transaccion</button>
                                 </div>
                             </div>
                         </div>
@@ -538,42 +537,25 @@ const mostrarMensajeError = () => {
   }
 };
 
-const updateTransaction = (transaccionId1, clientId) => {
-
-
-  const updatedAmount = document.getElementById("update-amount").value;
-  const updatedStatus = document.getElementById("update-status").value;
-  const updatedEntityname = document.getElementById("update-entityname").value;
-  const updatedPaymentDate = document.getElementById("update-paymentDate").value;
-  const updatedEndDate = document.getElementById("update-endDate").value;
-  const updatedCategory = document.getElementById("update-paymentDate").value;
-  // const updatedclientnSend = document.getElementById("clientnSend").value;
-  // const client = document.getElementById("clientEdit" + id).value;
-
-
-
-  const updatedName = document.getElementById("update-name" + clientId).value;
-  const updatedCelphone = document.getElementById(
-    "update-celphone" + clientId
-  ).value;
-  const updatedEmail = document.getElementById("update-email" + clientId).value;
-
-  // validateFields(transaccionId1, updatedName, updatedCelphone, updatedEmail);
-  // const hasErrors = Object.values(errorMessages).some(
-  //   (message) => message !== ""
-  // );
-
-  // if (hasErrors) {
-  //   mostrarMensajeError();
-  //   return;
-  // }
+const updateTransaction = (transaccionId1,transaccionId) => {
+  // transaccionId1,
+  const updatedAmount = document.getElementById("update-amount"+transaccionId).value;
+  const updatedStatus = document.getElementById("update-status"+transaccionId).value;
+  const updatedEntityname = document.getElementById("update-entityname"+transaccionId).value;
+  const updatedPaymentDate = document.getElementById("update-paymentDate"+transaccionId).value;
+  const updatedEndDate = document.getElementById("update-endDate"+transaccionId).value;
+  const updatedCategory = document.getElementById("update-category"+transaccionId).value;
 
   const updateData = {
-    name: updatedName,
-    celphone: updatedCelphone,
-    email: updatedEmail,
+    amount: updatedAmount,
+    status: updatedStatus,
+    entityname: updatedEntityname,
+    paymentDate: updatedPaymentDate,
+    endDate: updatedEndDate,
+    category: updatedCategory
   };
 
+  console.log("update.........",updateData)
   fetch(
     `http://localhost:4000/transaction/${transaccionId1}`,
     {
@@ -613,6 +595,8 @@ const updateTransaction = (transaccionId1, clientId) => {
       });
     });
 };
+
+
 
 const logOut = () => {
   localStorage.removeItem("login");
