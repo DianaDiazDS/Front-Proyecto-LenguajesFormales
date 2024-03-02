@@ -20,60 +20,61 @@
   <body>
     <div class="container-fluid p-0">
       <nav
-        class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5 d-flex justify-content-between"
+      class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-lg-5 d-flex justify-content-between"
+    >
+      <a href="/" class="navbar-brand ml-lg-3">
+        <h1 class="text-primary">
+          <span class="text-white">SPA</span> Center
+        </h1>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
-        <a href="/" class="navbar-brand ml-lg-3">
-          <h1 class="text-primary">
-            <span class="text-white">SPA</span> Center
-          </h1>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/dashboard-home"
-                >Home</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/dashboard-clientes"
-                >Clientes</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="/dashboard-transaction"
-                >Reservaciones</a
-              >
-            </li>
-          </ul>
-        </div>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/" class="nav-link active" onclick="logOut()">
-              Cerrar Sesión
-            </a>
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="/dashboard-home"
+              >Home</a
+            >
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="/dashboard-clientes"
+              >Clientes</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="/dashboard-transactions"
+              >transacciones</a
+            >
+          </li>
+      
         </ul>
-      </nav>
+      </div>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="/" class="nav-link active" onclick="logOut()">
+            Cerrar Sesión
+          </a>
+        </li>
+      </ul>
+    </nav>
     </div>
 
     <div class="container">
@@ -178,7 +179,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="status" class="form-label">estado</label>
-                  <input type="text" class="form-control" id="status" />
+                  <input type="tel" class="form-control" id="status" />
                 </div>
                 <div class="mb-3">
                   <label for="entityname" class="form-label"
