@@ -15,6 +15,8 @@ const iduser = localStorage.getItem("iduser");
 // };
 // requireLogin();
 
+
+
 fetch(apiUrl, {
   headers: {
     Authorization: `${authorizationToken}`,
