@@ -1,4 +1,10 @@
 /********** Template CSS ************/
+
+#mensajeTexto {
+  height: 70px; /*  altura */
+  width: 100%; /*  ancho  */
+  overflow-y: auto;
+}
 h1,
 h2,
 .font-weight-bold {

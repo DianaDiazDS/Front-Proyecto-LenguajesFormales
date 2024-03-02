@@ -175,130 +175,130 @@ loadTable();
 // chargeSelect();
 
 
-const findById = () => {
-  const option = document.getElementById("select-id");
-  if (option.value !== "Seleccione una categoria") {
-    return new Promise((resolve, reject) => {
-      fetch(
-        `http://localhost:4000/transaction/categoria/${option.value}`,
-        {
-          headers: {
-            Authorization: `${authorizationToken}`,
-          },
-        }
-      )
-        .then((data) => {
-          if (!data.ok) {
-            throw new Error(`Error: ${data.status} - ${data.statusText}`);
-          }
-          return data.json();
-        })
-        .then((result) => {
-          document.getElementById("table-body").innerHTML = "";
+// const findById = () => {
+//   const option = document.getElementById("select-id");
+//   if (option.value !== "Seleccione una categoria") {
+//     return new Promise((resolve, reject) => {
+//       fetch(
+//         `http://localhost:4000/transaction/categoria/${option.value}`,
+//         {
+//           headers: {
+//             Authorization: `${authorizationToken}`,
+//           },
+//         }
+//       )
+//         .then((data) => {
+//           if (!data.ok) {
+//             throw new Error(`Error: ${data.status} - ${data.statusText}`);
+//           }
+//           return data.json();
+//         })
+//         .then((result) => {
+//           document.getElementById("table-body").innerHTML = "";
 
 
-          const clientId = localStorage.getItem("iduser");
-          if (!clientId) {
-            console.error("No se encontró el ID del cliente en el localStorage");
-            return;
-          }
+//           const clientId = localStorage.getItem("iduser");
+//           if (!clientId) {
+//             console.error("No se encontró el ID del cliente en el localStorage");
+//             return;
+//           }
 
-          result.data.forEach((transaccion) => {
+//           result.data.forEach((transaccion) => {
             
-            const row = document.createElement("tr");
-            // <td>${transaccion.client.name}</td>
-            row.innerHTML = `
-          <td>${transaccion.id}</td>
-          <td>${transaccion.amount}</td>
-          <td>${transaccion.status}</td>
-          <td>${transaccion.entityname}</td>
-          <td>${transaccion.paymentDate}</td>
-          <td>${transaccion.endDate}</td>
-          <td>${transaccion.category}</td>
+//             const row = document.createElement("tr");
+//             // <td>${transaccion.client.name}</td>
+//             row.innerHTML = `
+//           <td>${transaccion.id}</td>
+//           <td>${transaccion.amount}</td>
+//           <td>${transaccion.status}</td>
+//           <td>${transaccion.entityname}</td>
+//           <td>${transaccion.paymentDate}</td>
+//           <td>${transaccion.endDate}</td>
+//           <td>${transaccion.category}</td>
         
-                <td>      
+//                 <td>      
                 
-                    <i class="bi bi-pencil-fill"
-                    type="button" 
-                    data-bs-toggle="modal"
-                    data-bs-target="#editModal${transaccion._id}" 
-                    style="color: #FFC300; font-size: 2rem;">
-                    </i>
-                    <!-- Modal -->
-                    <div class="modal fade" id="editModal${transaccion._id
-              }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="editModalLabel">Editar transaccion</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">            
+//                     <i class="bi bi-pencil-fill"
+//                     type="button" 
+//                     data-bs-toggle="modal"
+//                     data-bs-target="#editModal${transaccion._id}" 
+//                     style="color: #FFC300; font-size: 2rem;">
+//                     </i>
+//                     <!-- Modal -->
+//                     <div class="modal fade" id="editModal${transaccion._id
+//               }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+//                         <div class="modal-dialog">
+//                             <div class="modal-content">
+//                                 <div class="modal-header">
+//                                     <h1 class="modal-title fs-5" id="editModalLabel">Editar transaccion</h1>
+//                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+//                                 </div>
+//                                 <div class="modal-body">            
                 
-                                    <div class="mb-3">
-                                        <label for="update-amount" class="form-label">cantidad</label>
-                                        <input type="text" class="form-control" id="update-amount${transaccion._id
-              }" value="${transaccion.amount}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="update-status" class="form-label">estado</label>
-                                        <input type="tel" class="form-control" id="update-status${transaccion._id
-              }" value="${transaccion.status}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="update-entityname" class="form-label">entityname</label>
-                                        <input type="tel" class="form-control" id="update-entityname${transaccion._id
-              }" value="${transaccion.entityname}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="update-paymentDate" class="form-label">fecha pago</label>
-                                        <input type="text" class="form-control" id="update-paymentDate${transaccion._id
-              }" value="${transaccion.paymentDate}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="update-endDate" class="form-label">fecha limite</label>
-                                        <input type="text" class="form-control" id="update-endDate${transaccion._id
-              }" value="${transaccion.endDate}">
-                                    </div>
-                                    <div class="mb-3">
-                                    <label for="update-category" class="form-label">categoria</label>
-                                    <input type="text" class="form-control" id="update-category${transaccion._id
-              }" value="${transaccion.category}">
-                                     </div>
+//                                     <div class="mb-3">
+//                                         <label for="update-amount" class="form-label">cantidad</label>
+//                                         <input type="text" class="form-control" id="update-amount${transaccion._id
+//               }" value="${transaccion.amount}">
+//                                     </div>
+//                                     <div class="mb-3">
+//                                         <label for="update-status" class="form-label">estado</label>
+//                                         <input type="tel" class="form-control" id="update-status${transaccion._id
+//               }" value="${transaccion.status}">
+//                                     </div>
+//                                     <div class="mb-3">
+//                                         <label for="update-entityname" class="form-label">entityname</label>
+//                                         <input type="tel" class="form-control" id="update-entityname${transaccion._id
+//               }" value="${transaccion.entityname}">
+//                                     </div>
+//                                     <div class="mb-3">
+//                                         <label for="update-paymentDate" class="form-label">fecha pago</label>
+//                                         <input type="text" class="form-control" id="update-paymentDate${transaccion._id
+//               }" value="${transaccion.paymentDate}">
+//                                     </div>
+//                                     <div class="mb-3">
+//                                         <label for="update-endDate" class="form-label">fecha limite</label>
+//                                         <input type="text" class="form-control" id="update-endDate${transaccion._id
+//               }" value="${transaccion.endDate}">
+//                                     </div>
+//                                     <div class="mb-3">
+//                                     <label for="update-category" class="form-label">categoria</label>
+//                                     <input type="text" class="form-control" id="update-category${transaccion._id
+//               }" value="${transaccion.category}">
+//                                      </div>
                                     
                                     
                                     
-                                </div>
+//                                 </div>
 
 
-                                <div class="modal-footer">                     
-                                    <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${transaccion.id}','${transaccion._id}' )">Actualizar transaccion</button>
-                                </div>
-                            </div>
-                        </div>6
-                    </div>
+//                                 <div class="modal-footer">                     
+//                                     <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
+//                                 <button type="button" class="btn btn-primary" onclick="updateTransaction('${transaccion.id}','${transaccion._id}' )">Actualizar transaccion</button>
+//                                 </div>
+//                             </div>
+//                         </div>6
+//                     </div>
             
 
-                </td> 
+//                 </td> 
 
-                <td>
-                <i class="bi bi-x-circle" data-value='${transaccion.id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
-                </td>
+//                 <td>
+//                 <i class="bi bi-x-circle" data-value='${transaccion.id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+//                 </td>
 
                     
-            `;
+//             `;
 
 
 
 
-            document.getElementById("table-body").appendChild(row);
-          });
-        })
-        .catch((error) => reject(error));
-    });
-  }
-};
+//             document.getElementById("table-body").appendChild(row);
+//           });
+//         })
+//         .catch((error) => reject(error));
+//     });
+//   }
+// };
 
 const drop = (id) => {
   const URI = `http://localhost:4000/transaction/${id}`;
@@ -374,7 +374,46 @@ const findByIdUsuario = async (clientId) => {
 const getClientId = () => {
   return clientIdFound; // Devuelve el _id encontrado o null si no se encontró
 };
+const addRellenarTransaction=()=>{
+  const mensajeTexto = document.getElementById("mensajeTexto").value;
 
+    
+    const amountRegex = /Valor:\s*([\d.,]+)/i;
+    const entitynameRegex = /tu factura\s+(\w+)\s+postpago/i;
+    const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
+    const endDateRegex = /Fecha\s+limite\s+de\s+pago:\s+(\d{2}\/\w+\/\d{4})/i; 
+    const categoryRegex = /(\w+)\s+postpago\s+del\s+mes\s+de/i;
+
+   
+    const amountMatch = mensajeTexto.match(amountRegex);
+    const entitynameMatch = mensajeTexto.match(entitynameRegex);
+    const paymentDateMatch = mensajeTexto.match(paymentDateRegex);
+    const endDateMatch = mensajeTexto.match(endDateRegex);
+    const categoryMatch = mensajeTexto.match(categoryRegex);
+
+    
+    if (!amountMatch || !entitynameMatch || !paymentDateMatch || !endDateMatch || !categoryMatch) {
+        console.log("No se pudo extraer la información completa de la transacción.");
+        return;
+    }
+
+    
+    const amount = amountMatch[1];
+    const entityname = entitynameMatch[1];
+    const paymentDate = paymentDateMatch[1];
+    const endDate = endDateMatch[1];
+    const category = categoryMatch[1];
+
+
+    document.getElementById("amount").value = amount;
+    document.getElementById("entityname").value = entityname;
+    document.getElementById("paymentDate").value = paymentDate;
+    document.getElementById("endDate").value = endDate;
+    document.getElementById("category").value = category;
+
+
+    console.log("¡Transacción agregada con éxito!");
+}
 
 const addTransaction = () => {
   const id = document.getElementById("id").value;
@@ -388,39 +427,8 @@ const addTransaction = () => {
 
   // const clientId = document.getElementById("select-id2").value;
   const clientId = localStorage.getItem("iduser");
-  // console
 
-  // findByIdUsuario(clientId)
-  //   .then(() => {
-  //     const clientnEncontrado = getClientId();
-
-  //     validateFields(id,amount, status, entityname, paymentDate,endDate,category);
-  //     const hasErrors = Object.values(errorMessages).some(
-  //       (message) => message !== ""
-  //     );
   
-  //     if (hasErrors) {
-  //       mostrarMensajeError();
-  //       return;
-  //     }
-
-  //     const newTransaction = {
-  //       id: id,
-  //       amount: amount,
-  //       status: status,
-  //       entityname: entityname,
-  //       paymentDate: paymentDate,
-  //       endDate: endDate,
-  //       category: category,
-  //       client: {
-  //         _id: clientnEncontrado,
-  //       },
-  //     };
-
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error al buscar cliente:", error);
-  //   });
 
   findByIdUsuario(clientId)
     .then(() => {
@@ -591,6 +599,17 @@ const updateTransaction = (transaccionId1, transaccionId) => {
   const updatedPaymentDate = document.getElementById("update-paymentDate" + transaccionId).value;
   const updatedEndDate = document.getElementById("update-endDate" + transaccionId).value;
   const updatedCategory = document.getElementById("update-category" + transaccionId).value;
+
+
+  validateFields(transaccionId1,updatedAmount, updatedStatus, updatedEntityname,updatedPaymentDate,updatedEndDate,updatedCategory);
+          const hasErrors = Object.values(errorMessages).some(
+            (message) => message !== ""
+          );
+      
+          if (hasErrors) {
+            mostrarMensajeError();
+            return;
+          }
 
   const updateData = {
     amount: updatedAmount,
