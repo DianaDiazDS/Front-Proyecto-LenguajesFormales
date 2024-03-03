@@ -20,23 +20,24 @@ document.getElementById("btnLogin").addEventListener("click", () => {
     .then((response) => response.json())
     .then((data) => {
       if (data.state) {
-       //esta data la envia  logincontroler: res.status(200).json({ state: true,data: user ,token });
-     
-//necesario para acceder a usuario y el id
-        if (Array.isArray(data.data) && data.data.length > 0) {
-          const firstUserData = data.data[0];
-          const userId = firstUserData.id;
-          console.log("ID del usuario:", userId, "hols",firstUserData.username)
-          alert("ID del usuario:", userId, "hols",firstUserData.username);
-          SaveLocalStorage("iduser", userId);
-          
-          // Puedes hacer algo con el ID aquí
+        try {
+          const userData = data.data;  // Obtén el objeto de datos directamente
+    
+          // Verifica que userData tenga la estructura que esperas
+          if (userData && userData.id) {
+            console.log("HOLAAAAA");
+            const userId = userData.id;
+            console.log("ID del usuario:", userId, "hols", userData.username);
+           
+            SaveLocalStorage("iduser", userId);
+            // Resto del código...
+          }
+        } catch (error) {
+          console.error("Error en el bloque if:", error);
         }
-        // console.log("hola.....",data.data);
-
-        // localStorage.setItem("username", data.username);
-        // SaveLocalStorage("username", data2);
-        window.location.replace("/dashboard-home");
+       
+          window.location.replace("/dashboard-home");
+        
         SaveLocalStorage("login", data.token);
       } else {
         Swal.fire({

@@ -15,6 +15,9 @@ const iduser = localStorage.getItem("iduser");
 // };
 // requireLogin();
 
+document.addEventListener("DOMContentLoaded", () => {
+  loadTable();
+});
 
 
 fetch(apiUrl, {
@@ -33,13 +36,15 @@ const unlockInputs = () => {
   document.getElementById("update-name").disabled = false;
   document.getElementById("update-celphone").disabled = false;
   document.getElementById("update-email").disabled = false;
-  document.getElementById("update-username").disabled = false;
-  document.getElementById("update-password").disabled = false;
+  document.getElementById("update-username").disabled = true;
+  document.getElementById("update-password").disabled = true;
   document.getElementById("acceptButton").classList.remove("d-none");
   document.getElementById("cancelButton").classList.remove("d-none");
   document.getElementById("updateButton").classList.add("d-none");
 
+  loadTable();
 };
+
 //funciones para actualizar
 
 function acceptUpdate() {
@@ -51,7 +56,16 @@ function cancelUpdate() {
   document.getElementById("acceptButton").classList.add("d-none");
   document.getElementById("cancelButton").classList.add("d-none");
   document.getElementById("updateButton").classList.remove("d-none");
+ disableInputs();
 }
+
+const disableInputs = () => {
+  document.getElementById("update-name").disabled = true;
+  document.getElementById("update-celphone").disabled = true;
+  document.getElementById("update-email").disabled = true;
+  document.getElementById("update-username").disabled = true;
+  document.getElementById("update-password").disabled = true;
+};
 
 const updateClient = () => {
  
@@ -100,6 +114,8 @@ const updateClient = () => {
           icon: "success",
           confirmButtonText: "Aceptar",
         });
+        disableInputs();
+        document.getElementById("cancelButton").classList.add("d-none");
       } else {
         Swal.fire({
           title: "Error al actualizar el cliente",
@@ -122,97 +138,57 @@ const updateClient = () => {
 };
 
 
-//es para una tabla 
-const loadTable2 = () => {
-  document.getElementById("table-body").innerHTML = "";
 
-  const iduser = localStorage.getItem("iduser");
-  console.log(iduser);
+  const loadTable = () => {
+    const iduser = parseInt(localStorage.getItem("iduser"));
+  console.log(iduser)
+    if (!iduser || iduser === "undefined") {
+      // Manejar el caso en que iduser no esté definido o sea "undefined"
+      return;
+    }
+  
+   
+    return new Promise((resolve, reject) => {
+      fetch(`${apiUrl}/${iduser}`, {
+        headers: {
+          Authorization: `${authorizationToken}`,
+        },
+      })
+        .then((datos) => datos.json())
+        .then((datos) => {
+          console.log(datos);
+          datos.data.forEach((cliente) => {
+            document.getElementById("update-name").value = cliente.name;
+            document.getElementById("update-celphone").value = cliente.celphone || '';
+            document.getElementById("update-email").value = cliente.email || '';
+            document.getElementById("update-username").value = cliente.username || '';
+            document.getElementById("update-password").value = cliente.password|| '';
 
-  if (!iduser || iduser === "undefined") {
-    // Manejar el caso en que iduser no esté definido o sea "undefined"
-    return;
-  }
 
-  return new Promise((resolve, reject) => {
-    fetch(`${apiUrl}/${iduser}`, {
-      headers: {
-        Authorization: `${authorizationToken}`,
-      },
-    })
-      .then((datos) => datos.json())
-      .then((datos) => {
-        datos.data.forEach((cliente) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-          <td>${cliente.id}</td>
-          <td>${cliente.name}</td>
-          <td>${cliente.celphone || "N/A"}</td>
-          <td>${cliente.email || "N/A"}</td>
-          <td>      
-              <!-- Resto del contenido del row... -->
-          </td> 
-          <td>
-              <i class="bi bi-x-circle" data-value='${cliente._id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
-          </td>
-        `;
 
-          document.getElementById("table-body").appendChild(row);
-
+            const updateNameInput = document.getElementById("update-name");
+            const updateCelphoneInput = document.getElementById("update-celphone");
+            const updateEmailInput = document.getElementById("update-email");
+            const updateUsernameInput = document.getElementById("update-username");
+            const updatePasswordInput = document.getElementById("update-password");
+  
+            // Actualiza los valores de los campos directamente
+            updateNameInput.value = cliente.name;
+            updateCelphoneInput.value = cliente.celphone || '';
+            updateEmailInput.value = cliente.email || '';
+            updateUsernameInput.value = cliente.username || '';
+            updatePasswordInput.value = cliente.password || '';
+  
+            // Cambia la visibilidad de los botones
+         
         });
         })
-          .catch((error) => console.log(error));
-      });
+        .catch((error) => console.log(error))
+      
+     
+    });
   };
 
-  // const loadTable = () => {
-  //   const iduser = localStorage.getItem("iduser");
-  
-  //   if (!iduser || iduser === "undefined") {
-  //     // Manejar el caso en que iduser no esté definido o sea "undefined"
-  //     return;
-  //   }
-  
-  //   return new Promise((resolve, reject) => {
-  //     fetch(`${apiUrl}/${iduser}`, {
-  //       headers: {
-  //         Authorization: `${authorizationToken}`,
-  //       },
-  //     })
-  //       .then((datos) => datos.json())
-  //       .then((datos) => {
-  //         datos.data.forEach((cliente) => {
-  //           document.getElementById("update-name").value = cliente.name;
-  //           document.getElementById("update-celphone").value = cliente.celphone || '';
-  //           document.getElementById("update-email").value = cliente.email || '';
-  //           document.getElementById("update-username").value = cliente.username || '';
-  //           document.getElementById("update-password").value = cliente.password|| '';
-
-
-
-  //         //Actualiza el formulario con los datos del cliente
-  //         document.getElementById("client-details-form").innerHTML = `
-  //           <div class="mb-3">
-  //             <label for="update-name" class="form-label">Nombre</label>
-  //             <input type="text" class="form-control" id="update-name" value="${cliente.name}" disabled>
-  //           </div>
-  //           <div class="mb-3">
-  //             <label for="update-celphone" class="form-label">Teléfono</label>
-  //             <input type="tel" class="form-control" id="update-celphone" value="${cliente.celphone || ''}" disabled>
-  //           </div>
-  //           <div class="mb-3">
-  //             <label for="update-email" class="form-label">Correo Electrónico</label>
-  //             <input type="email" class="form-control" id="update-email" value="${cliente.email || ''}" disabled>
-  //           </div>
-  //           <!-- Agrega aquí otros campos del cliente según sea necesario... -->
-  //         `;
-  //       });
-  //       })
-  //       .catch((error) => console.log(error));
-  //   });
-  // };
-
-loadTable2();
 
 
   const drop = (id) => {
