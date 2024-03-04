@@ -79,16 +79,7 @@
 
     <div class="container">
       <div class="input-group pt-3 d-flex align-items-center">
-        <span
-          class="input-group-text"
-          id="basic-addon1" 
-          style="
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-            max-height: 3rem;
-          "
-          >categoriapara buscar</span
-        >
+        
         <select
           class="form-select"
           id="select-id"
@@ -96,7 +87,7 @@
           style="
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
-            max-height: 3rem;
+            max-height: 5rem;
           "
         >
           <option value="Seleccione  una categoria">Seleccione una categoria</option>
@@ -109,11 +100,100 @@
           style="
             border-top-right-radius: 10px;
             border-bottom-right-radius: 10px;
-            max-height: 3rem;
+            border-bottom-left-radius:  10px;
+
+            /* max-height: 5rem; */
           "
         >
           <option value="Seleccione el estado">Seleccione una categoria</option>
         </select>
+          
+        <!-- <span
+          class="input-group-text"
+          id="basic-addon1" 
+          style="
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            max-height: 3rem;
+          ">
+          rango precio |
+              
+        </span
+        > -->
+
+
+        <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
+        style="
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius:  10px;
+
+        /* max-height: 5rem; */
+      "
+        >precio</button>
+        
+                
+<!-- filtro por monto -->
+        <div
+          class="modal fade"
+          id="staticBackdrop2"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                  filtro por monto
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="add-client-form">
+                   
+
+                  <div class="mb-4">
+                    <label for="amountfiltro1" class="form-label"></label>
+                    <input type="text" class="form-control" id="amountfiltro1"
+                      required
+                    />
+                  </div>
+                  <div class="mb-4">
+                    <label for="amountfiltro2" class="form-label"></label>
+                    <input type="text" class="form-control" id="amountfiltro2"
+                      required
+                    />
+                  </div>
+
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cerrar
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="findByAmount()"
+                >
+                  buscar montos
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <i
           class="bi bi-arrow-clockwise"
@@ -246,66 +326,6 @@
           </div>
         </div>
       </div>
-        <!-- <i
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop2"
-          class="bi bi-plus-circle-fill m-0 p-0"
-          style="font-size: 2.3rem; color: blue"
-        ></i>
-
-        <div
-          class="modal fade"
-          id="staticBackdrop2"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabindex="-1"
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                  Agregar transaccion
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form id="add-client-form">
-
-                  <div class="mb-3">
-                    <label for="mensajeTexto" class="form-label">mensaje de texto</label>
-                    <input type="text" class="form-control" rows="15" id="mensajeTexto" required />
-                  </div>    
-
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Cerrar
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="addTransaction()"
-                >
-                  Agregar trnsaccion
-                </button>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
 
 
 
