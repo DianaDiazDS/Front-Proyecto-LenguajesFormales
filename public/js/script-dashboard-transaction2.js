@@ -403,55 +403,70 @@ const addRellenarTransaction=()=>{
   const mensajeTexto = document.getElementById("mensajeTexto").value;
 
     
-    const amountRegex = /Valor:\s*([\d.,]+)/i;
-    const entitynameRegex = /factura\s+(\w+)\s+postpago/i;
-    const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
-    const endDateRegex = /Fecha\s+limite\s+de\s+pago:\s+(\d{2}\/\w+\/\d{4})/i; 
-    const categoryRegex = /(\w+)\s+postpago\s+del\s+mes\s+de/i;
-    const statusRegex = /gracias\s+por\s+tu\s+pago/i;
+    // const amountRegex = /Valor:\s*([\d.,]+)/i;
+    // const entitynameRegex = /factura\s+(\w+)\s+postpago/i;
+    // const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
+    // const endDateRegex = /Fecha\s+limite\s+de\s+pago:\s+(\d{2}\/\w+\/\d{4})/i; 
+    // const categoryRegex = /(\w+)\s+postpago\s+del\s+mes\s+de/i;
+    // const statusRegex = /gracias\s+por\s+tu\s+pago/i;
+        
+    const amountRegex = /(\$?\d{1,3}(?:,\d{3})*(?:\.\d{2})?)/;
+    const paymentDateRegex = /(\d{2}\/(?:\d{2}|[a-zA-Z]{3})\/\d{4})/;
+    // const entitynameRegex = /factura\s+(\w+)\s+postpago/i;
+    // const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
+    // const endDateRegex = /Fecha\s+limite\s+de\s+pago:\s+(\d{2}\/\d+\/\d{4})/i; 
+    // const categoryRegex = /(\w+)\s+postpago\s+del\s+mes\s+de/i;
+    // const statusRegex = /gracias\s+por\s+tu\s+pago/i;
    
+    console.log(amountRegex)
+
     const amountMatch = mensajeTexto.match(amountRegex);
-    const entitynameMatch = mensajeTexto.match(entitynameRegex);
+    // const entitynameMatch = mensajeTexto.match(entitynameRegex);
     const paymentDateMatch = mensajeTexto.match(paymentDateRegex);
-    const endDateMatch = mensajeTexto.match(endDateRegex);
-    const categoryMatch = mensajeTexto.match(categoryRegex);
-    const statusMatch = mensajeTexto.match(statusRegex);
+    // const endDateMatch = mensajeTexto.match(endDateRegex);
+    // const categoryMatch = mensajeTexto.match(categoryRegex);
+    // const statusMatch = mensajeTexto.match(statusRegex);
 
 
     // _para modificar la fehcha
-    console.log("fecha",endDateMatch[1])
-    const fechaFormateada = convertirFecha(endDateMatch[1]);
+    // console.log("fecha",endDateMatch[1])
+    // const fechaFormateada = convertirFecha(endDateMatch[1]);
+    console.log("fecha",paymentDateMatch[1])
+    const fechaFormateada = convertirFecha(paymentDateMatch[1]);
 
-    const numeroConComas =amountMatch[1];
-    const numeroSinComas = quitarComas(numeroConComas);
+    // const numeroConComas =amountMatch[1];
+    // const numeroSinComas = quitarComas(numeroConComas);
 
+console.log("fechaaaa",fechaFormateada)
 
-
-    if (!amountMatch || !entitynameMatch || !paymentDateMatch || !endDateMatch || !categoryMatch) {
-        console.log("No se pudo extraer la información completa de la transacción.");
+    // if (!amountMatch || !entitynameMatch || !paymentDateMatch || !endDateMatch || !categoryMatch) {
+    //     console.log("No se pudo extraer la información completa de la transacción.");
         
-         }  
-    const amount = numeroSinComas ? numeroSinComas : "";
-    const entityname = entitynameMatch ? entitynameMatch[1] : "";
-    const paymentDate = paymentDateMatch ? paymentDateMatch[1] : "";
+    //      }  
+
+    const amount = amountMatch ? amountMatch[1] : "";
+
+    // const amount = numeroSinComas ? numeroSinComas : "";
+    // const entityname = entitynameMatch ? entitynameMatch[1] : "";
+    // const paymentDate = paymentDateMatch ? paymentDateMatch[1] : "";
     const endDate = fechaFormateada ? fechaFormateada : "";
-    const category = categoryMatch ? categoryMatch[1] : "";
-    const status = statusMatch ? "pago" : "noPago";
+    // const category = categoryMatch ? categoryMatch[1] : "";
+    // const status = statusMatch ? "pago" : "noPago";
 
 
     document.getElementById("amount").value = amount;
-    document.getElementById("entityname").value = entityname;
-    document.getElementById("paymentDate").value = paymentDate;
-    document.getElementById("endDate").value = endDate;
-    document.getElementById("category").value = category;
-    document.getElementById("status").value = status;
+    // document.getElementById("entityname").value = entityname;
+    // document.getElementById("paymentDate").value = paymentDate;
+    // document.getElementById("endDate").value = endDate;
+    // document.getElementById("category").value = category;
+    // document.getElementById("status").value = status;
 
     console.log("amount",amount);
-    console.log("entityname",entityname);
-    console.log("paymentDate",paymentDate);
-    console.log("endDate",endDate);
-    console.log("category",category);
-    console.log(" status", status);
+    // console.log("entityname",entityname);
+    // console.log("paymentDate",paymentDate);
+    // console.log("endDate",endDate);
+    // console.log("category",category);
+    // console.log(" status", status);
 
     
 
