@@ -441,6 +441,135 @@ const findByStatus = () => {
   }
 };
 
+const findByAmount = () => {
+  const option1 = document.getElementById("amountfiltro1");
+  const option2 = document.getElementById("amountfiltro2");
+
+  
+  if (option1.value !== "" && option2.value !== "") {
+    return new Promise((resolve, reject) => {
+      fetch(
+        `http://localhost:4000/transaction/amount/${option1.value}/${option2.value}`,
+        {
+          headers: {
+            Authorization: `${authorizationToken}`,
+          },
+        }
+      )
+        .then((data) => {
+          if (!data.ok) {
+            throw new Error(`Error: ${data.status} - ${data.statusText}`);
+          }
+          return data.json();
+        })
+        .then((result) => {
+          document.getElementById("table-body").innerHTML = "";
+
+
+          const clientId = localStorage.getItem("iduser");
+          if (!clientId) {
+            console.error("No se encontró el ID del cliente en el localStorage");
+            return;
+          }
+
+          result.data.forEach((transaccion) => {
+            const paymentDate = formatDate(transaccion.paymentDate);
+            const endDate = formatDate(transaccion.endDate);
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+          <td>${transaccion.id}</td>
+          <td>${transaccion.amount}</td>
+          <td>${transaccion.status}</td>
+          <td>${transaccion.entityname}</td>
+          <td>${paymentDate}</td>
+          <td>${endDate}</td>
+          <td>${transaccion.category}</td>
+        
+                <td>      
+                
+                    <i class="bi bi-pencil-fill"
+                    type="button" 
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal${transaccion._id}" 
+                    style="color: #FFC300; font-size: 2rem;">
+                    </i>
+                    <!-- Modal -->
+                    <div class="modal fade" id="editModal${transaccion._id
+              }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editModalLabel">Editar transaccion</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">            
+                
+                                    <div class="mb-3">
+                                        <label for="update-amount" class="form-label">cantidad</label>
+                                        <input type="text" class="form-control" id="update-amount${transaccion._id
+              }" value="${transaccion.amount}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-status" class="form-label">estado</label>
+                                        <input type="tel" class="form-control" id="update-status${transaccion._id
+              }" value="${transaccion.status}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-entityname" class="form-label">entityname</label>
+                                        <input type="tel" class="form-control" id="update-entityname${transaccion._id
+              }" value="${transaccion.entityname}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-paymentDate" class="form-label">fecha pago</label>
+                                        <input type="text" class="form-control" id="update-paymentDate${transaccion._id
+              }" value="${paymentDate}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-endDate" class="form-label">fecha limite</label>
+                                        <input type="text" class="form-control" id="update-endDate${transaccion._id
+              }" value="${endDate}">
+                                    </div>
+                                    <div class="mb-3">
+                                    <label for="update-category" class="form-label">categoria</label>
+                                    <input type="text" class="form-control" id="update-category${transaccion._id
+              }" value="${transaccion.category}">
+                                     </div>
+                                    
+                                    
+                                    
+                                </div>
+
+
+                                <div class="modal-footer">                     
+                                    <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${transaccion.id}','${transaccion._id}' )">Actualizar transaccion</button>
+                                </div>
+                            </div>
+                        </div>6
+                    </div>
+            
+
+                </td> 
+
+                <td>
+                <i class="bi bi-x-circle" data-value='${transaccion.id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+                </td>
+
+                    
+            `;
+
+
+
+
+            document.getElementById("table-body").appendChild(row);
+          });
+        })
+        .catch((error) => reject(error));
+    });
+  }
+};
+
 const drop = (id) => {
   const URI = `http://localhost:4000/transaction/${id}`;
   fetch(URI, {
@@ -515,8 +644,6 @@ const findByIdUsuario = async (clientId) => {
 const getClientId = () => {
   return clientIdFound; 
 };
-
-
 
 
 function convertirFecha(fecha) {
