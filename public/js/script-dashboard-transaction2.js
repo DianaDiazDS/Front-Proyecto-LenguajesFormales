@@ -302,6 +302,132 @@ const findByCategoria = () => {
   }
 };
 
+const findByStatus = () => {
+  const option = document.getElementById("select-id2");
+  if (option.value !== "Seleccione una estado") {
+    return new Promise((resolve, reject) => {
+      fetch(
+        `http://localhost:4000/transaction/status/${option.value}`,
+        {
+          headers: {
+            Authorization: `${authorizationToken}`,
+          },
+        }
+      )
+        .then((data) => {
+          if (!data.ok) {
+            throw new Error(`Error: ${data.status} - ${data.statusText}`);
+          }
+          return data.json();
+        })
+        .then((result) => {
+          document.getElementById("table-body").innerHTML = "";
+
+
+          const clientId = localStorage.getItem("iduser");
+          if (!clientId) {
+            console.error("No se encontró el ID del cliente en el localStorage");
+            return;
+          }
+
+          result.data.forEach((transaccion) => {
+            const paymentDate = formatDate(transaccion.paymentDate);
+            const endDate = formatDate(transaccion.endDate);
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+          <td>${transaccion.id}</td>
+          <td>${transaccion.amount}</td>
+          <td>${transaccion.status}</td>
+          <td>${transaccion.entityname}</td>
+          <td>${paymentDate}</td>
+          <td>${endDate}</td>
+          <td>${transaccion.category}</td>
+        
+                <td>      
+                
+                    <i class="bi bi-pencil-fill"
+                    type="button" 
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal${transaccion._id}" 
+                    style="color: #FFC300; font-size: 2rem;">
+                    </i>
+                    <!-- Modal -->
+                    <div class="modal fade" id="editModal${transaccion._id
+              }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="editModalLabel">Editar transaccion</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">            
+                
+                                    <div class="mb-3">
+                                        <label for="update-amount" class="form-label">cantidad</label>
+                                        <input type="text" class="form-control" id="update-amount${transaccion._id
+              }" value="${transaccion.amount}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-status" class="form-label">estado</label>
+                                        <input type="tel" class="form-control" id="update-status${transaccion._id
+              }" value="${transaccion.status}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-entityname" class="form-label">entityname</label>
+                                        <input type="tel" class="form-control" id="update-entityname${transaccion._id
+              }" value="${transaccion.entityname}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-paymentDate" class="form-label">fecha pago</label>
+                                        <input type="text" class="form-control" id="update-paymentDate${transaccion._id
+              }" value="${paymentDate}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-endDate" class="form-label">fecha limite</label>
+                                        <input type="text" class="form-control" id="update-endDate${transaccion._id
+              }" value="${endDate}">
+                                    </div>
+                                    <div class="mb-3">
+                                    <label for="update-category" class="form-label">categoria</label>
+                                    <input type="text" class="form-control" id="update-category${transaccion._id
+              }" value="${transaccion.category}">
+                                     </div>
+                                    
+                                    
+                                    
+                                </div>
+
+
+                                <div class="modal-footer">                     
+                                    <button type="button" class="btn btn-secondary" onclick="loadTable()" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" onclick="updateTransaction('${transaccion.id}','${transaccion._id}' )">Actualizar transaccion</button>
+                                </div>
+                            </div>
+                        </div>6
+                    </div>
+            
+
+                </td> 
+
+                <td>
+                <i class="bi bi-x-circle" data-value='${transaccion.id}' type="button" onclick='drop(this.getAttribute("data-value"))' style="color: red; font-size: 2rem;"></i>
+                </td>
+
+                    
+            `;
+
+
+
+
+            document.getElementById("table-body").appendChild(row);
+          });
+        })
+        .catch((error) => reject(error));
+    });
+  }
+};
+
 const drop = (id) => {
   const URI = `http://localhost:4000/transaction/${id}`;
   fetch(URI, {
@@ -377,29 +503,115 @@ const getClientId = () => {
   return clientIdFound; 
 };
 
+// function convertirFecha(fecha) {
+//   // Verificar si la fecha está en formato numérico (dd/mm/yyyy)
+//   const partes = fecha.split("/");
+//   if (partes.length === 3) {
+//     return fecha; // Devolver la fecha sin cambios si está en formato numérico
+//   }
 
+//   // Si la fecha está en formato abreviado (dd/abr/yyyy)
+//   const meses = {
+//     "ene": "01", "feb": "02", "mar": "03", "abr": "04", "may": "05", "jun": "06",
+//     "jul": "07", "ago": "08", "sep": "09", "oct": "10", "nov": "11", "dic": "12"
+//   };
 
+//   const dia = partes[0];
+//   const mesAbreviado = partes[1];
+//   const año = partes[2];
+
+//   const mesNumerico = meses[mesAbreviado.toLowerCase()];
+//   const fechaFormateada = `${dia}/${mesNumerico}/${año}`;
+
+//   return fechaFormateada;
+// }
 
 function convertirFecha(fecha) {
-  
+  // Verificar si la fecha está en formato numérico (dd/mm/yyyy) o (dd/mm/yy)
+  const partes = fecha.split("/");
+  if (partes.length === 3) {
+    const año = partes[2].length === 2 ? `20${partes[2]}` : partes[2]; // Si el año tiene 2 dígitos, se asume que está en el siglo XXI
+    return `${partes[0]}/${partes[1]}/${año}`;
+  }
+
+  // Si la fecha está en formato abreviado (dd/abr/yyyy)
   const meses = {
     "ene": "01", "feb": "02", "mar": "03", "abr": "04", "may": "05", "jun": "06",
     "jul": "07", "ago": "08", "sep": "09", "oct": "10", "nov": "11", "dic": "12"
   };
-  const partes = fecha.split("/");
-  
+
   const dia = partes[0];
   const mesAbreviado = partes[1];
-  const año = partes[2];
+  const año = `20${partes[2]}`; // Agregar "20" al año si tiene solo dos dígitos
 
   const mesNumerico = meses[mesAbreviado.toLowerCase()];
   const fechaFormateada = `${dia}/${mesNumerico}/${año}`;
 
   return fechaFormateada;
 }
+
+
 function quitarComas(numeroConComas) {
   return numeroConComas.replace(/,/g, "");
 }
+
+const addRellenarTransaction = () => {
+  
+  const mensajeTexto = document.getElementById("mensajeTexto").value;
+
+  const amountRegex = /(\$?\d{1,3}(?:[,.]\d{3})*(?:[,.]\d{1,2})?)/;
+  const entitynameRegex = /(?:Pagaste|Tienes una factura pendiente de) \$.+? a (\w+)/;
+  const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
+  const statusRegex = /\sPagaste\b/;
+  
+  const amountMatch = mensajeTexto.match(amountRegex);
+  const entitynameMatch = mensajeTexto.match(entitynameRegex);
+  const paymentDateMatch = mensajeTexto.match(paymentDateRegex);
+  const statusMatch = mensajeTexto.match(statusRegex);
+
+  let amount = "";
+  if (amountMatch) {
+    
+    amount = amountMatch[1].replace(/\$/g, '').replace(/,/g, '').replace(/\./g, '.');  }
+
+  let entityname = "";
+  if (entitynameMatch) {
+    entityname = entitynameMatch[1] || entitynameMatch[2] || "";
+    console.log("entityname", entityname);
+  } else {
+    console.log("No se encontraron coincidencias para entityname.");
+  }
+
+  let paymentDate = "";
+  let endDate = "";
+
+  if (paymentDateMatch) {
+    if (statusMatch) {
+      paymentDate = paymentDateMatch[1];
+    } else {
+      endDate = paymentDateMatch[1];
+    }
+  }
+
+  const status = statusMatch ? "pago" : "noPago";
+  const id= document.getElementById("id");
+  document.getElementById("amount").value = amount;
+  document.getElementById("entityname").value = entityname;
+  document.getElementById("paymentDate").value = paymentDate;
+  document.getElementById("endDate").value = endDate;
+  document.getElementById("status").value = status;
+  id =id.value ;
+
+  console.log("amount", amount);
+  console.log("entityname", entityname);
+  console.log("paymentDate", paymentDate);
+  console.log("endDate", endDate);
+  console.log("status", status);
+
+  console.log("¡Transacción agregada con éxito!");
+};
+
+
 
 
 const addTransaction = () => {
@@ -512,6 +724,14 @@ const validateField = (fieldName, value) => {
         errorMessages[fieldName] = "";
       }
       break;
+    case "cantidad2":
+      if (isNaN(value) || value <= 0 || value > 2000000) {
+        errorMessages[fieldName] =
+          "El campo Cantidad debe ser un número válido que no supere los 2 millones.";
+      } else {
+        errorMessages[fieldName] = "";
+      }
+      break;
 
     case "estado":
       const validStatus = ["pago", "deuda", "noPago"];
@@ -582,6 +802,14 @@ const validateFields = ( id, amount1, status1, entityname1, paymentDate1,endDate
   validateField("categoria", category1);
 
   mostrarMensajeError();
+};
+
+const validateFields2 = ( amount1, amount2)=> {
+ 
+  validateField("cantidad", amount1);
+  validateField("cantidad2", amount2);
+
+  
 };
 
 
