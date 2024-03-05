@@ -659,24 +659,54 @@ const getClientId = () => {
   return clientIdFound; 
 };
 
+// function convertirFecha(fecha) {
+//   // Verificar si la fecha está en formato numérico (dd/mm/yyyy)
+//   const partes = fecha.split("/");
+//   if (partes.length === 3) {
+//     return fecha; // Devolver la fecha sin cambios si está en formato numérico
+//   }
+
+//   // Si la fecha está en formato abreviado (dd/abr/yyyy)
+//   const meses = {
+//     "ene": "01", "feb": "02", "mar": "03", "abr": "04", "may": "05", "jun": "06",
+//     "jul": "07", "ago": "08", "sep": "09", "oct": "10", "nov": "11", "dic": "12"
+//   };
+
+//   const dia = partes[0];
+//   const mesAbreviado = partes[1];
+//   const año = partes[2];
+
+//   const mesNumerico = meses[mesAbreviado.toLowerCase()];
+//   const fechaFormateada = `${dia}/${mesNumerico}/${año}`;
+
+//   return fechaFormateada;
+// }
 
 function convertirFecha(fecha) {
-  
+  // Verificar si la fecha está en formato numérico (dd/mm/yyyy) o (dd/mm/yy)
+  const partes = fecha.split("/");
+  if (partes.length === 3) {
+    const año = partes[2].length === 2 ? `20${partes[2]}` : partes[2]; // Si el año tiene 2 dígitos, se asume que está en el siglo XXI
+    return `${partes[0]}/${partes[1]}/${año}`;
+  }
+
+  // Si la fecha está en formato abreviado (dd/abr/yyyy)
   const meses = {
     "ene": "01", "feb": "02", "mar": "03", "abr": "04", "may": "05", "jun": "06",
     "jul": "07", "ago": "08", "sep": "09", "oct": "10", "nov": "11", "dic": "12"
   };
-  const partes = fecha.split("/");
-  
+
   const dia = partes[0];
   const mesAbreviado = partes[1];
-  const año = partes[2];
+  const año = `20${partes[2]}`; // Agregar "20" al año si tiene solo dos dígitos
 
   const mesNumerico = meses[mesAbreviado.toLowerCase()];
   const fechaFormateada = `${dia}/${mesNumerico}/${año}`;
 
   return fechaFormateada;
 }
+
+
 function quitarComas(numeroConComas) {
   return numeroConComas.replace(/,/g, "");
 }
@@ -691,8 +721,9 @@ const addRellenarTransaction=()=>{
     // const categoryRegex = /(\w+)\s+postpago\s+del\s+mes\s+de/i;
     // const statusRegex = /gracias\s+por\s+tu\s+pago/i;
         
-    const amountRegex = /(\$?\d{1,3}(?:,\d{3})*(?:\.\d{2})?)/;
-    const paymentDateRegex = /(\d{2}\/(?:\d{2}|[a-zA-Z]{3})\/\d{4})/;
+    const amountRegex =/(\$?\d{1,3}(?:,\d{3})*(?:\.?\d{1,2})?)/;
+    
+    const paymentDateRegex = /(\d{2}\/(?:\d{2}|[a-zA-Z]{3})\/(?:\d{2}|\d{4}))/
     // const entitynameRegex = /factura\s+(\w+)\s+postpago/i;
     // const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
     // const endDateRegex = /Fecha\s+limite\s+de\s+pago:\s+(\d{2}\/\d+\/\d{4})/i; 
@@ -702,6 +733,7 @@ const addRellenarTransaction=()=>{
     console.log(amountRegex)
 
     const amountMatch = mensajeTexto.match(amountRegex);
+    console.log(amountMatch)
     // const entitynameMatch = mensajeTexto.match(entitynameRegex);
     const paymentDateMatch = mensajeTexto.match(paymentDateRegex);
     // const endDateMatch = mensajeTexto.match(endDateRegex);
@@ -712,7 +744,9 @@ const addRellenarTransaction=()=>{
     // _para modificar la fehcha
     // console.log("fecha",endDateMatch[1])
     // const fechaFormateada = convertirFecha(endDateMatch[1]);
-    console.log("fecha",paymentDateMatch[1])
+    console.log("fecha",paymentDateMatch)
+    console.log("fecha2",paymentDateMatch[1])
+
     const fechaFormateada = convertirFecha(paymentDateMatch[1]);
 
     // const numeroConComas =amountMatch[1];
@@ -737,8 +771,8 @@ console.log("fechaaaa",fechaFormateada)
 
     document.getElementById("amount").value = amount;
     // document.getElementById("entityname").value = entityname;
-    // document.getElementById("paymentDate").value = paymentDate;
-    // document.getElementById("endDate").value = endDate;
+    document.getElementById("paymentDate").value = endDate;
+    document.getElementById("endDate").value = endDate;
     // document.getElementById("category").value = category;
     // document.getElementById("status").value = status;
 
