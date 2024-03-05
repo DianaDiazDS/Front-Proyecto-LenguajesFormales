@@ -445,6 +445,20 @@ const findByAmount = () => {
   const option1 = document.getElementById("amountfiltro1");
   const option2 = document.getElementById("amountfiltro2");
 
+ console.log(option1.value,option2.value)
+
+  validateFields2(option1.value,option2.value);
+          const hasErrors = Object.values(errorMessages).some(
+            
+            (message) => message !== ""
+          );
+      
+          if (hasErrors) {
+            alert("hay errores")
+            mostrarMensajeError();
+            return;
+          }
+
   
   if (option1.value !== "" && option2.value !== "") {
     return new Promise((resolve, reject) => {
@@ -852,6 +866,14 @@ const validateField = (fieldName, value) => {
         errorMessages[fieldName] = "";
       }
       break;
+    case "cantidad2":
+      if (isNaN(value) || value <= 0 || value > 2000000) {
+        errorMessages[fieldName] =
+          "El campo Cantidad debe ser un número válido que no supere los 2 millones.";
+      } else {
+        errorMessages[fieldName] = "";
+      }
+      break;
 
     case "estado":
       const validStatus = ["pago", "deuda", "noPago"];
@@ -922,6 +944,14 @@ const validateFields = ( id, amount1, status1, entityname1, paymentDate1,endDate
   validateField("categoria", category1);
 
   mostrarMensajeError();
+};
+
+const validateFields2 = ( amount1, amount2)=> {
+ 
+  validateField("cantidad", amount1);
+  validateField("cantidad2", amount2);
+
+  
 };
 
 
