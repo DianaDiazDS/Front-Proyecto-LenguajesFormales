@@ -561,7 +561,7 @@ const addRellenarTransaction = () => {
 
   const amountRegex = /(\$?\d{1,3}(?:[,.]\d{3})*(?:[,.]\d{1,2})?)/;
   const entitynameRegex = /(?:Pagaste|Tienes una factura pendiente de) \$.+? a (\w+)/;
-  const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
+  const paymentDateRegex = /(\d{4}\/\d{2}\/\d{2})/; // Formato: dd/mm/yyyy
   const statusRegex = /\sPagaste\b/;
   
   const amountMatch = mensajeTexto.match(amountRegex);
@@ -754,7 +754,7 @@ const validateField = (fieldName, value) => {
       break;
 
     case "fechapago":
-      const datepagoPattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+      const datepagoPattern = /^\d{4}\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
       if (!datepagoPattern.test(value)) {
         errorMessages[fieldName] =
           "El campo Fecha debe tener el formato dd/mm/yyyy.";
@@ -764,7 +764,7 @@ const validateField = (fieldName, value) => {
       break;
 
     case "fechalimite":
-      const datelimitePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+      const datelimitePattern = /^\d{4}\/(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])$/;
       if (!datelimitePattern.test(value)) {
         errorMessages[fieldName] =
           "El campo Fecha debe tener el formato dd/mm/yyyy.";
