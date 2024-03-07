@@ -428,6 +428,9 @@ const findByStatus = () => {
   }
 };
 
+
+
+
 const drop = (id) => {
   const URI = `http://localhost:4000/transaction/${id}`;
   fetch(URI, {
@@ -542,16 +545,13 @@ function convertirFecha(fecha) {
 
   const dia = partes[0];
   const mesAbreviado = partes[1];
-  const año = `20${partes[2]}`; // Agregar "20" al año si tiene solo dos dígitos
+  const año = `20${partes[2]}`; 
 
   const mesNumerico = meses[mesAbreviado.toLowerCase()];
   const fechaFormateada = `${año}/${mesNumerico}/${dia}`;
 
   return fechaFormateada;
 }
-
-// Ejemplo de uso:
-// 
 
 
 
@@ -598,10 +598,6 @@ const addRellenarTransaction = () => {
     }
   }
 
-  // const paymentDate2 = convertirFecha(paymentDate);
-  // const endDate2 = convertirFecha(endDate);
-
-  // console.log("fecha",paymentDate2,endDate2)
 
 
   const status = statusMatch ? "pago" : "noPago";
