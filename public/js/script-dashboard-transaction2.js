@@ -35,7 +35,7 @@ fetch(apiUrl, {
     const horas = ("0" + fechaOriginal.getUTCHours()).slice(-2);
     const minutos = ("0" + fechaOriginal.getUTCMinutes()).slice(-2);
 
-    const fechaFormateada = `${dia}/${mes}/${año}`;
+    const fechaFormateada = `${año}/${mes}/${dia}`;
     return fechaFormateada;
 };
 
@@ -531,7 +531,7 @@ function convertirFecha(fecha) {
   const partes = fecha.split("/");
   if (partes.length === 3) {
     const año = partes[2].length === 2 ? `20${partes[2]}` : partes[2]; // Si el año tiene 2 dígitos, se asume que está en el siglo XXI
-    return `${partes[0]}/${partes[1]}/${año}`;
+    return `${año}/${partes[1]}/${partes[0]}`;
   }
 
   // Si la fecha está en formato abreviado (dd/abr/yyyy)
@@ -545,10 +545,14 @@ function convertirFecha(fecha) {
   const año = `20${partes[2]}`; // Agregar "20" al año si tiene solo dos dígitos
 
   const mesNumerico = meses[mesAbreviado.toLowerCase()];
-  const fechaFormateada = `${dia}/${mesNumerico}/${año}`;
+  const fechaFormateada = `${año}/${mesNumerico}/${dia}`;
 
   return fechaFormateada;
 }
+
+// Ejemplo de uso:
+// 
+
 
 
 function quitarComas(numeroConComas) {
@@ -561,7 +565,7 @@ const addRellenarTransaction = () => {
 
   const amountRegex = /(\$?\d{1,3}(?:[,.]\d{3})*(?:[,.]\d{1,2})?)/;
   const entitynameRegex = /(?:Pagaste|Tienes una factura pendiente de) \$.+? a (\w+)/;
-  const paymentDateRegex = /(\d{4}\/\d{2}\/\d{2})/; // Formato: dd/mm/yyyy
+  const paymentDateRegex = /(\d{2}\/\d{2}\/\d{4})/; // Formato: dd/mm/yyyy
   const statusRegex = /\sPagaste\b/;
   
   const amountMatch = mensajeTexto.match(amountRegex);
@@ -569,6 +573,7 @@ const addRellenarTransaction = () => {
   const paymentDateMatch = mensajeTexto.match(paymentDateRegex);
   const statusMatch = mensajeTexto.match(statusRegex);
 
+  console.log("fecha1",paymentDateMatch[1])
   let amount = "";
   if (amountMatch) {
     
@@ -587,20 +592,27 @@ const addRellenarTransaction = () => {
 
   if (paymentDateMatch) {
     if (statusMatch) {
-      paymentDate = paymentDateMatch[1];
+      paymentDate = convertirFecha(paymentDateMatch[1])
     } else {
-      endDate = paymentDateMatch[1];
+      endDate = convertirFecha(paymentDateMatch[1]);
     }
   }
 
+  // const paymentDate2 = convertirFecha(paymentDate);
+  // const endDate2 = convertirFecha(endDate);
+
+  // console.log("fecha",paymentDate2,endDate2)
+
+
   const status = statusMatch ? "pago" : "noPago";
-  const id= document.getElementById("id");
+  const idValue= document.getElementById("id").value;
+  document.getElementById("id").value=idValue;
   document.getElementById("amount").value = amount;
   document.getElementById("entityname").value = entityname;
   document.getElementById("paymentDate").value = paymentDate;
   document.getElementById("endDate").value = endDate;
   document.getElementById("status").value = status;
-  id =id.value ;
+  
 
   console.log("amount", amount);
   console.log("entityname", entityname);
