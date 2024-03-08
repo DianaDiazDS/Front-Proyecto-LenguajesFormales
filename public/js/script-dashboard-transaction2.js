@@ -71,7 +71,7 @@ document.getElementById("select-id2").appendChild(optionDefault2);
       .then((datos) => datos.json())
       .then((datos) => {
         const select = document.getElementById("select-id");
-        const select2 = document.getElementById("select-i2");
+        const select2 = document.getElementById("select-id2");
 
 
 
@@ -172,6 +172,11 @@ document.getElementById("select-id2").appendChild(optionDefault2);
             option.value = transaccion.category;
             option.innerText = transaccion.category;
             select.appendChild(option);
+
+            const option2 = document.createElement("option");
+            option2.value = transaccion.status;
+            option2.innerText = transaccion.status;
+            select2.appendChild(option2);
 
             document.getElementById("table-body").appendChild(row);
           }
