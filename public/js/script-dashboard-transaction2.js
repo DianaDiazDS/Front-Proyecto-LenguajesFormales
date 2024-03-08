@@ -48,6 +48,13 @@ const loadTable = () => {
   optionDefault.innerText = "Seleccione una categoria";
   document.getElementById("select-id").appendChild(optionDefault);
 
+
+
+  document.getElementById("select-id2").innerHTML = "";
+const optionDefault2 = document.createElement("option");
+optionDefault2.value = "Seleccione  estado";
+optionDefault2.innerText = "Seleccione estado";
+document.getElementById("select-id2").appendChild(optionDefault2);
   const clientId = localStorage.getItem("iduser");
   if (!clientId) {
     console.error("No se encontró el ID del cliente en el localStorage");
@@ -64,6 +71,8 @@ const loadTable = () => {
       .then((datos) => datos.json())
       .then((datos) => {
         const select = document.getElementById("select-id");
+        const select2 = document.getElementById("select-i2");
+
 
 
 
