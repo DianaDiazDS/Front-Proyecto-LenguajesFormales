@@ -1,19 +1,9 @@
 const apiUrl = "http://localhost:4000/client";
-// const authorizationToken = localStorage.getItem("login");
 const authorizationToken = localStorage.getItem("login");
 const iduser = localStorage.getItem("iduser");
 
 
-// const isAuthenticated = () => {
-//   return authorizationToken !== null && authorizationToken !== undefined;
-// };
 
-// const requireLogin = () => {
-//   if (!isAuthenticated()) {
-//     window.location.replace("/login");
-//   }
-// };
-// requireLogin();
 
 document.addEventListener("DOMContentLoaded", () => {
   loadTable();
@@ -45,7 +35,7 @@ const unlockInputs = () => {
   loadTable();
 };
 
-//funciones para actualizar
+
 
 function acceptUpdate() {
   updateClient()
