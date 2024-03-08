@@ -194,6 +194,15 @@ loadTable();
 const findByCategoria = () => {
   const option = document.getElementById("select-id");
   if (option.value !== "Seleccione una categoria") {
+
+
+    const clientId = localStorage.getItem("iduser");
+    if (!clientId) {
+      console.error("No se encontró el ID del cliente en el localStorage");
+      return;
+    }
+
+
     return new Promise((resolve, reject) => {
       fetch(
         `http://localhost:4000/transaction/categoria/${option.value}`,
@@ -213,15 +222,13 @@ const findByCategoria = () => {
           document.getElementById("table-body").innerHTML = "";
 
 
-          const clientId = localStorage.getItem("iduser");
-          if (!clientId) {
-            console.error("No se encontró el ID del cliente en el localStorage");
-            return;
-          }
+         
 
           result.data.forEach((transaccion) => {
             const paymentDate = formatDate(transaccion.paymentDate);
             const endDate = formatDate(transaccion.endDate);
+
+            if (transaccion.client.id == clientId) {
 
             const row = document.createElement("tr");
             row.innerHTML = `
@@ -310,6 +317,8 @@ const findByCategoria = () => {
 
 
             document.getElementById("table-body").appendChild(row);
+
+            }
           });
         })
         .catch((error) => reject(error));
@@ -330,6 +339,7 @@ const findByStatus = () => {
     }
   console.log("aaaaaaaaaaaaa",clientId)
 
+  // `http://localhost:4000/transaction/status/${option.value}/${clientId}`,
     return new Promise((resolve, reject) => {
       fetch(
         `http://localhost:4000/transaction/status/${option.value}`,
@@ -357,7 +367,7 @@ const findByStatus = () => {
 
           result.data.forEach((transaccion) => {
 
-console.log("bbb",transaccion.c entId)
+console.log("bbb",transaccion.client,clientId)
             if (transaccion.client.id == clientId) {
               console.log("ntrro", clientId)
 
@@ -464,6 +474,13 @@ console.log("bbb",transaccion.c entId)
 const findByAmount = () => {
   const option1 = document.getElementById("amountfiltro1");
   const option2 = document.getElementById("amountfiltro2");
+  const clientId = localStorage.getItem("iduser");
+  
+  if (!clientId) {
+    console.error("No se encontró el ID del cliente en el localStorage");
+    return;
+  }
+
 
  console.log(option1.value,option2.value)
 
@@ -509,7 +526,7 @@ const findByAmount = () => {
           result.data.forEach((transaccion) => {
             const paymentDate = formatDate(transaccion.paymentDate);
             const endDate = formatDate(transaccion.endDate);
-
+            if (transaccion.client.id == clientId) {
             const row = document.createElement("tr");
             row.innerHTML = `
           <td>${transaccion.id}</td>
@@ -597,6 +614,7 @@ const findByAmount = () => {
 
 
             document.getElementById("table-body").appendChild(row);
+            }
           });
         })
         .catch((error) => reject(error));
