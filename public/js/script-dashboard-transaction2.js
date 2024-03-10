@@ -58,6 +58,7 @@ optionDefault2.innerText = "Seleccione estado";
 document.getElementById("select-id2").appendChild(optionDefault2);
 
   const clientId = localStorage.getItem("iduser");
+  console.log("idusuario",clientId)
   if (!clientId) {
     console.error("No se encontró el ID del cliente en el localStorage");
     return;
