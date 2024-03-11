@@ -853,6 +853,26 @@ const addRellenarTransaction = () => {
   document.getElementById("status").value = status;
   
 
+  if (amount) {
+    document.getElementById("amount").value = amount;
+  }
+  
+  if (entityname) {
+    document.getElementById("entityname").value = entityname;
+  }
+  
+  if (paymentDate) {
+    document.getElementById("paymentDate").value = paymentDate;
+  }
+  
+  if (endDate) {
+    document.getElementById("endDate").value = endDate;
+  }
+  
+  document.getElementById("status").value = status;
+
+  
+
   console.log("amount", amount);
   console.log("entityname", entityname);
   console.log("paymentDate", paymentDate);
