@@ -76,7 +76,8 @@ document.getElementById("select-id2").appendChild(optionDefault2);
         const select = document.getElementById("select-id");
         const select2 = document.getElementById("select-id2");
 
-
+        const uniqueCategories = {};
+        const uniqueStatuses = {};
 
 
         datos.data.forEach((transaccion) => {
@@ -171,19 +172,28 @@ document.getElementById("select-id2").appendChild(optionDefault2);
                     
             `;
 
-            const option = document.createElement("option");
-            option.value = transaccion.category;
-            option.innerText = transaccion.category;
-            select.appendChild(option);
 
-            const option2 = document.createElement("option");
-            option2.value = transaccion.status;
-            option2.innerText = transaccion.status;
-            select2.appendChild(option2);
-
+            uniqueCategories[transaccion.category] = true;
+            uniqueStatuses[transaccion.status] = true;
             document.getElementById("table-body").appendChild(row);
+
+           
           }
         });
+        for (let category in uniqueCategories) {
+          const option = document.createElement("option");
+          option.value = category;
+          option.innerText = category;
+          select.appendChild(option);
+        }
+
+        for (let status in uniqueStatuses) {
+          const option = document.createElement("option");
+          option.value = status;
+          option.innerText = status;
+          select2.appendChild(option);
+        }
+        
       })
       .catch((erroaddr) => console.log(error));
   });
